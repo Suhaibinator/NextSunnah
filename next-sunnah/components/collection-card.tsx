@@ -59,9 +59,11 @@ export function CollectionCard({ collection, className }: CollectionCardProps) {
           className
         )}
       >
-        <div className="mb-4 flex items-center justify-between">
-          <h3 className="text-lg font-semibold tracking-tight">{collection.name}</h3>
-          <p className="arabic text-xl font-medium text-right">{collection.nameArabic}</p>
+        <div className="mb-4">
+          <div className="grid grid-cols-2 gap-4">
+            <h3 className="text-lg font-semibold tracking-tight">{collection.name}</h3>
+            <p className="arabic text-xl font-medium text-right">{collection.nameArabic}</p>
+          </div>
         </div>
         
         <p className="mb-4 text-sm text-muted-foreground line-clamp-2">

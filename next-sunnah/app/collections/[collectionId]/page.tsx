@@ -48,8 +48,10 @@ export default async function CollectionPage(props: CollectionPageProps) {
         
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold mb-2">{collection.name}</h1>
-            <p className="arabic text-2xl font-medium mb-4">{collection.nameArabic}</p>
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <h1 className="text-3xl md:text-4xl font-bold">{collection.name}</h1>
+              <p className="arabic text-2xl font-medium text-right">{collection.nameArabic}</p>
+            </div>
           </div>
           
           <div className="text-sm text-muted-foreground">
@@ -79,18 +81,20 @@ export default async function CollectionPage(props: CollectionPageProps) {
               href={`/collections/${collection.id}/${book.id}`}
               className="block p-4 rounded-lg border bg-card hover:border-primary transition-colors"
             >
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
+              <div className="flex flex-col gap-4">
+                <div className="grid grid-cols-2 gap-4">
                   <div className="flex items-center gap-2">
                     <span className="text-primary font-medium">{book.number}.</span>
                     <h3 className="font-medium">{book.name}</h3>
                   </div>
-                  <p className="arabic mt-1">{book.nameArabic}</p>
+                  <p className="arabic text-right">{book.nameArabic}</p>
                 </div>
                 
                 <div className="text-sm text-muted-foreground">
-                  <div>{book.hadithCount} Hadiths</div>
-                  <div>{book.chapterCount} Chapters</div>
+                  <div className="flex items-center gap-4">
+                    <div>{book.hadithCount} Hadiths</div>
+                    <div>{book.chapterCount} Chapters</div>
+                  </div>
                 </div>
               </div>
             </Link>

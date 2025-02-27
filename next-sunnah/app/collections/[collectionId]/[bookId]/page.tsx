@@ -58,10 +58,12 @@ export default async function BookPage(props: BookPageProps) {
             <div className="text-sm text-muted-foreground mb-1">
               {collection.name}
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold mb-2">
-              {book.number}. {book.name}
-            </h1>
-            <p className="arabic text-2xl font-medium mb-4">{book.nameArabic}</p>
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <h1 className="text-3xl md:text-4xl font-bold">
+                {book.number}. {book.name}
+              </h1>
+              <p className="arabic text-2xl font-medium text-right">{book.nameArabic}</p>
+            </div>
           </div>
           
           <div className="text-sm text-muted-foreground">
@@ -84,10 +86,12 @@ export default async function BookPage(props: BookPageProps) {
           return (
             <div key={chapter.id} className="border-t pt-8">
               <div className="mb-6">
-                <h2 className="text-xl font-bold mb-2">
-                  Chapter {chapter.number}: {chapter.name}
-                </h2>
-                <p className="arabic text-lg">{chapter.nameArabic}</p>
+                <div className="grid grid-cols-2 gap-4">
+                  <h2 className="text-xl font-bold">
+                    Chapter {chapter.number}: {chapter.name}
+                  </h2>
+                  <p className="arabic text-lg text-right">{chapter.nameArabic}</p>
+                </div>
               </div>
               
               <div className="space-y-8">
