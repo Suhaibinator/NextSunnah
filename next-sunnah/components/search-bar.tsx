@@ -3,7 +3,11 @@
 import { useState } from "react"
 import { Search } from "lucide-react"
 
-export function SearchBar() {
+interface SearchBarProps {
+  size?: "default" | "compact"
+}
+
+export function SearchBar({ size = "default" }: SearchBarProps) {
   const [query, setQuery] = useState("")
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -12,21 +16,23 @@ export function SearchBar() {
     console.log("Search query:", query)
   }
 
+  const isCompact = size === "compact"
+  
   return (
     <form onSubmit={handleSubmit} className="relative w-full">
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
+        <Search className={`absolute left-2 top-1/2 ${isCompact ? 'h-3.5 w-3.5' : 'h-4 w-4'} -translate-y-1/2 text-muted`} />
         <input
           type="text"
-          placeholder="Search hadith by keyword, reference number, or topic..."
-          className="w-full rounded-md border border-input bg-secondary py-3 pl-10 pr-4 text-sm ring-offset-background placeholder:text-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          placeholder={isCompact ? "Search hadith..." : "Search hadith by keyword, reference number, or topic..."}
+          className={`w-full rounded-md border border-input ${isCompact ? 'bg-background py-1.5' : 'bg-secondary py-3'} ${isCompact ? 'pl-8' : 'pl-10'} pr-4 text-sm ring-offset-background placeholder:text-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring`}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
       </div>
       <button
         type="submit"
-        className="absolute right-1 top-1/2 -translate-y-1/2 rounded-md bg-primary px-3 py-1 text-xs font-medium text-primary-foreground"
+        className={`absolute right-1 top-1/2 -translate-y-1/2 rounded-md bg-primary ${isCompact ? 'px-2 py-0.5 text-xs' : 'px-3 py-1 text-xs'} font-medium text-primary-foreground`}
       >
         Search
       </button>

@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
+import { SearchBar } from "@/components/search-bar"
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
@@ -34,6 +35,13 @@ export function Header() {
             </div>
           </Link>
         </div>
+
+        {/* Header Search Bar (hidden on homepage) */}
+        {pathname !== "/" && (
+          <div className="hidden md:block w-1/3 mx-4">
+            <SearchBar size="compact" />
+          </div>
+        )}
 
         {/* Mobile menu button */}
         <button
@@ -70,6 +78,12 @@ export function Header() {
         {isMenuOpen && (
           <div className="fixed inset-0 top-16 z-50 grid h-[calc(100vh-4rem)] grid-flow-row auto-rows-max overflow-auto p-6 pb-32 shadow-md animate-in slide-in-from-top md:hidden bg-background">
             <div className="relative z-20 grid gap-6 p-4 rounded-md">
+              {/* Mobile Search Bar (hidden on homepage) */}
+              {pathname !== "/" && (
+                <div className="mb-4">
+                  <SearchBar size="compact" />
+                </div>
+              )}
               <nav className="grid grid-flow-row auto-rows-max text-sm">
                 {navItems.map((item) => (
                   <Link

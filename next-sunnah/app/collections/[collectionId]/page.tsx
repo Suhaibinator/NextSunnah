@@ -46,23 +46,33 @@ export default async function CollectionPage(props: CollectionPageProps) {
           ← Back to Collections
         </Link>
         
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
-          <div>
-            <div className="grid grid-cols-2 gap-4 mb-4">
-              <h1 className="text-3xl md:text-4xl font-bold">{collection.name}</h1>
-              <p className="arabic text-2xl font-medium text-right">{collection.nameArabic}</p>
-            </div>
+        <div className="flex flex-col md:flex-row justify-between gap-4 mb-6">
+          <div className="flex-1">
+            <h1 className="text-3xl md:text-4xl font-bold">{collection.name}</h1>
           </div>
           
-          <div className="text-sm text-muted-foreground">
-            <div>{collection.bookCount} Books</div>
-            <div>{collection.hadithCount} Hadiths</div>
+          <div className="flex flex-col items-end">
+            <p className="arabic text-2xl font-medium">{collection.nameArabic}</p>
+            <div className="text-sm text-muted-foreground mt-2">
+              <div>{collection.bookCount} Books</div>
+              <div>{collection.hadithCount} Hadiths</div>
+            </div>
           </div>
         </div>
         
-        <p className="text-muted-foreground mb-6">
+        <p className="text-muted-foreground mb-4">
           {collection.description}
         </p>
+        
+        {/* More Information Link */}
+        <div className="mb-6">
+          <Link 
+            href={`/collections/${collection.id}/info`}
+            className="text-primary hover:underline inline-block"
+          >
+            More Information
+          </Link>
+        </div>
         
         {/* Search Bar */}
         <div className="max-w-2xl mb-8">
@@ -107,6 +117,7 @@ export default async function CollectionPage(props: CollectionPageProps) {
           )}
         </div>
       </div>
+      
     </div>
   )
 }
