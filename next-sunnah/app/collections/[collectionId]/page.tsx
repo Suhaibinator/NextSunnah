@@ -5,35 +5,37 @@ import { getBooksByCollection } from "@/data/books"
 import { SearchBar } from "@/components/search-bar"
 
 interface CollectionPageProps {
-  params: {
+  params: Promise<{
     collectionId: string
-  }
+  }>
 }
 
-export function generateMetadata({ params }: CollectionPageProps) {
+export async function generateMetadata(props: CollectionPageProps) {
+  const params = await props.params;
   const collection = collections.find(c => c.id === params.collectionId)
-  
+
   if (!collection) {
     return {
       title: "Collection Not Found - Sunnah.com",
     }
   }
-  
+
   return {
     title: `${collection.name} - Sunnah.com`,
     description: collection.description,
   }
 }
 
-export default function CollectionPage({ params }: CollectionPageProps) {
+export default async function CollectionPage(props: CollectionPageProps) {
+  const params = await props.params;
   const collection = collections.find(c => c.id === params.collectionId)
-  
+
   if (!collection) {
     notFound()
   }
-  
+
   const books = getBooksByCollection(collection.id)
-  
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">

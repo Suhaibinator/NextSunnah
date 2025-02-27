@@ -7,40 +7,42 @@ import { getHadithsByChapter } from "@/data/hadiths"
 import { SearchBar } from "@/components/search-bar"
 
 interface BookPageProps {
-  params: {
+  params: Promise<{
     collectionId: string
     bookId: string
-  }
+  }>
 }
 
-export function generateMetadata({ params }: BookPageProps) {
+export async function generateMetadata(props: BookPageProps) {
+  const params = await props.params;
   const collection = collections.find(c => c.id === params.collectionId)
   const books = getBooksByCollection(params.collectionId)
   const book = books.find(b => b.id === params.bookId)
-  
+
   if (!collection || !book) {
     return {
       title: "Book Not Found - Sunnah.com",
     }
   }
-  
+
   return {
     title: `${book.name} - ${collection.name} - Sunnah.com`,
     description: `${book.name} from ${collection.name} containing ${book.hadithCount} hadiths.`,
   }
 }
 
-export default function BookPage({ params }: BookPageProps) {
+export default async function BookPage(props: BookPageProps) {
+  const params = await props.params;
   const collection = collections.find(c => c.id === params.collectionId)
   const books = getBooksByCollection(params.collectionId)
   const book = books.find(b => b.id === params.bookId)
-  
+
   if (!collection || !book) {
     notFound()
   }
-  
+
   const chapters = getChaptersByBook(book.id)
-  
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">

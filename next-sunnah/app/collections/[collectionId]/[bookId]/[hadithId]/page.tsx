@@ -14,10 +14,11 @@ interface HadithParams {
 }
 
 interface HadithPageProps {
-  params: HadithParams | Promise<HadithParams>
+  params: Promise<HadithParams | Promise<HadithParams>>
 }
 
-export async function generateMetadata({ params }: HadithPageProps) {
+export async function generateMetadata(props: HadithPageProps) {
+  const params = await props.params;
   // You can just use params directly, no need for Promise.resolve
   const { collectionId, bookId, hadithId } = params
 
@@ -38,7 +39,8 @@ export async function generateMetadata({ params }: HadithPageProps) {
   }
 }
 
-const HadithPage = async ({ params }: HadithPageProps) => {
+const HadithPage = async (props: HadithPageProps) => {
+  const params = await props.params;
   const { collectionId, bookId, hadithId } = params
 
   const collection = collections.find((c) => c.id === collectionId)
