@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next Sunnah
+
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app) that provides a modern interface for browsing hadith collections.
 
 ## Getting Started
 
@@ -28,6 +30,28 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Testing
+
+This project uses Jest and React Testing Library for unit testing. The tests are organized to mirror the project structure:
+
+- `__tests__/lib/` - Tests for utility functions
+- `__tests__/components/` - Tests for React components
+- `__tests__/data/` - Tests for data validation
+- `__tests__/app/` - Tests for page components
+
+To run the tests:
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run tests with coverage report
+npm run test:coverage
+```
 
 ## Deploy on Vercel
 
