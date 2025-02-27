@@ -53,6 +53,24 @@ npm run test:watch
 npm run test:coverage
 ```
 
+## Continuous Integration
+
+This project uses GitHub Actions for continuous integration. The workflow runs automatically on all branch pushes and on pull requests to main/master:
+
+- Runs all unit tests on every branch push
+- Blocks merging to main/master if tests fail
+- Enforces code quality through automated testing
+
+The CI/CD pipeline consists of two main workflows:
+
+1. **Frontend Tests** (`.github/workflows/frontend-tests.yml`): Runs unit tests on all branches
+2. **Branch Protection** (`.github/workflows/branch-protection.yml`): Ensures that the main/master branch is protected and requires passing tests before merging
+
+This setup ensures that:
+- All code changes are tested, regardless of branch
+- The main/master branch always contains working code
+- Failed tests prevent merging to main/master, maintaining code quality
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.

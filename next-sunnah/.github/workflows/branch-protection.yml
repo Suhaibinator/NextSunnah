@@ -1,0 +1,74 @@
+name: Branch Protection
+
+on:
+  # Run this workflow once when it's first added
+  workflow_dispatch:
+  # Run on push to main to ensure protection is always in place
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  protection:
+    name: Set Branch Protection
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure Branch Protection
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            
+            // Get the default branch name
+            const { data: repoData } = await github.rest.repos.get({
+              owner,
+              repo
+            });
+            
+            const defaultBranch = repoData.default_branch;
+            console.log(`Setting up branch protection for ${defaultBranch} branch`);
+            
+            try {
+              // Update branch protection rule
+              await github.rest.repos.updateBranchProtection({
+                owner,
+                repo,
+                branch: defaultBranch,
+                required_status_checks: {
+                  strict: true,
+                  contexts: ['Unit Tests']
+                },
+                enforce_admins: false,
+                required_pull_request_reviews: null,
+                restrictions: null,
+                required_linear_history: false,
+                allow_force_pushes: false,
+                allow_deletions: false
+              });
+              
+              console.log(`Branch protection successfully configured for ${defaultBranch}`);
+            } catch (error) {
+              console.error('Error setting branch protection:', error);
+              
+              // If the error is due to insufficient permissions, provide guidance
+              if (error.status === 403) {
+                console.log('Permission denied. Make sure the GITHUB_TOKEN has the necessary permissions.');
+                console.log('For repository settings, you may need to use a personal access token with repo scope.');
+                console.log('See: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token');
+              }
+              
+              // Don't fail the workflow, just log the error
+              console.log('Branch protection could not be automatically configured.');
+              console.log('Please manually set up branch protection in repository settings:');
+              console.log(`1. Go to Settings > Branches > Branch protection rules`);
+              console.log(`2. Add a rule for the ${defaultBranch} branch`);
+              console.log(`3. Enable "Require status checks to pass before merging"`);
+              console.log(`4. Search for and select "Unit Tests" as a required status check`);
+              console.log(`5. Save changes`);
+            }
