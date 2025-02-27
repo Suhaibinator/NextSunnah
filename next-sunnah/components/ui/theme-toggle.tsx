@@ -6,6 +6,12 @@ import { useTheme } from "next-themes"
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = React.useState(false)
+
+  // useEffect only runs on the client, so we can safely show the UI
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
 
   return (
     <button
@@ -13,8 +19,12 @@ export function ThemeToggle() {
       className="rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-primary"
       aria-label="Toggle theme"
     >
-      <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-      <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+      {/* Only render one icon based on current theme */}
+      {mounted && (theme === "light" ? (
+        <Moon className="h-5 w-5" />
+      ) : (
+        <Sun className="h-5 w-5" />
+      ))}
       <span className="sr-only">Toggle theme</span>
     </button>
   )
