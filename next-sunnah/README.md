@@ -1,8 +1,21 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next Sunnah
+
+A Next.js application for browsing and searching Hadith collections using the Sunnah.com API.
 
 ## Getting Started
 
-First, run the development server:
+### API Configuration
+
+This application uses the Sunnah.com API to fetch hadith collections, books, and hadiths. To use the API:
+
+1. Get an API key from [Sunnah.com Developers](https://sunnah.com/developers)
+2. Create a `.env.local` file in the root directory (you can copy from `.env.local.example`)
+3. Add your API key to the `.env.local` file:
+   ```
+   SUNNAH_API_KEY=your_api_key_here
+   ```
+
+### Running the Development Server
 
 ```bash
 npm run dev
@@ -20,14 +33,32 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Features
+
+- Browse hadith collections
+- View books within collections
+- Read hadiths with Arabic text
+- Search functionality
+- Responsive design with light/dark mode
+- Integration with Sunnah.com API
+
+## API Integration
+
+The application integrates with the Sunnah.com API to fetch:
+
+- Collections of hadiths
+- Books within collections
+- Individual hadiths
+
+API documentation can be found at [Sunnah.com Developers](https://sunnah.com/developers).
+
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+To learn more about the technologies used in this project:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API
+- [Tailwind CSS](https://tailwindcss.com/docs) - utility-first CSS framework
+- [Sunnah.com API](https://sunnah.com/developers) - API documentation
 
 ## Deploy on Vercel
 

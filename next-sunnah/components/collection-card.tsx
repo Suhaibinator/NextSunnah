@@ -75,6 +75,12 @@ export function CollectionCard({ collection, className }: CollectionCardProps) {
             <span>{collection.bookCount} Books</span>
             <span>•</span>
             <span>{collection.hadithCount} Hadiths</span>
+            {collection.totalAvailableHadith !== undefined && (
+              <>
+                <span>•</span>
+                <span>{collection.totalAvailableHadith} Available</span>
+              </>
+            )}
           </div>
           <div className="text-primary group-hover:underline">View Collection</div>
         </div>

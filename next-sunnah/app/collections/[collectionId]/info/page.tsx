@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { collections } from "@/data/collections"
+import { fetchCollections } from "@/lib/api"
 
 interface CollectionInfoPageProps {
   params: Promise<{
@@ -10,23 +10,37 @@ interface CollectionInfoPageProps {
 
 export async function generateMetadata(props: CollectionInfoPageProps) {
   const params = await props.params;
-  const collection = collections.find(c => c.id === params.collectionId)
+  
+  try {
+    // Fetch all collections
+    const { collections } = await fetchCollections(100, 1);
+    const collection = collections.find(c => c.id === params.collectionId);
 
-  if (!collection) {
-    return {
-      title: "Collection Not Found - Sunnah.com",
+    if (!collection) {
+      return {
+        title: "Collection Not Found - Sunnah.com",
+      }
     }
-  }
 
-  return {
-    title: `${collection.name} Information - Sunnah.com`,
-    description: `Detailed information about ${collection.name}`,
+    return {
+      title: `${collection.name} Information - Sunnah.com`,
+      description: `Detailed information about ${collection.name}`,
+    }
+  } catch (error) {
+    console.error("Error generating metadata:", error);
+    return {
+      title: "Collection Information - Sunnah.com",
+      description: "Detailed information about hadith collections",
+    }
   }
 }
 
 export default async function CollectionInfoPage(props: CollectionInfoPageProps) {
   const params = await props.params;
-  const collection = collections.find(c => c.id === params.collectionId)
+  
+  // Fetch all collections
+  const { collections } = await fetchCollections(100, 1);
+  const collection = collections.find(c => c.id === params.collectionId);
 
   if (!collection) {
     notFound()
@@ -130,6 +144,30 @@ export default async function CollectionInfoPage(props: CollectionInfoPageProps)
           <section className="bg-card rounded-lg p-6 border">
             <h2 className="text-2xl font-semibold mb-4">Overview</h2>
             <p className="text-lg">{collection.description}</p>
+          </section>
+          
+          {/* API-specific information */}
+          <section className="bg-card rounded-lg p-6 border">
+            <h2 className="text-2xl font-semibold mb-4">Collection Details</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <h3 className="text-lg font-medium mb-2">Statistics</h3>
+                <ul className="space-y-2 text-muted-foreground">
+                  <li>Total Hadiths: {collection.hadithCount}</li>
+                  {collection.totalAvailableHadith !== undefined && (
+                    <li>Available Hadiths: {collection.totalAvailableHadith}</li>
+                  )}
+                  <li>Books: {collection.bookCount}</li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="text-lg font-medium mb-2">Features</h3>
+                <ul className="space-y-2 text-muted-foreground">
+                  <li>Has Books: {collection.hasBooks ? "Yes" : "No"}</li>
+                  <li>Has Chapters: {collection.hasChapters ? "Yes" : "No"}</li>
+                </ul>
+              </div>
+            </div>
           </section>
           
           <section className="bg-card rounded-lg p-6 border">

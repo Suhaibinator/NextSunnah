@@ -2,9 +2,10 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { collections } from "@/data/collections"
 import { getBooksByCollection } from "@/data/books"
-import { getChaptersByBook } from "@/data/chapters"
 import { getHadithsByChapter } from "@/data/hadiths"
 import { SearchBar } from "@/components/search-bar"
+import { fetchChaptersForBook, fetchHadithsForBook } from "@/lib/api"
+import { Hadith, Chapter } from "@/types"
 
 interface BookPageProps {
   params: Promise<{
@@ -41,7 +42,43 @@ export default async function BookPage(props: BookPageProps) {
     notFound()
   }
 
-  const chapters = getChaptersByBook(book.id)
+  // Try to fetch chapters and hadiths from API
+  let chapters: Chapter[] = [];
+  const apiHadiths = new Map(); // Map to store hadiths by chapter ID
+  
+  try {
+    // Extract the book number from the book ID (e.g., "bukhari-1" -> "1")
+    const bookNumber = book.number;
+    
+    // Fetch chapters from the API
+    const chaptersData = await fetchChaptersForBook(collection.id, bookNumber);
+    chapters = chaptersData.chapters;
+    
+    // If no chapters were returned from the API, log a warning
+    if (chapters.length === 0) {
+      console.warn(`No chapters found for book ${book.id}`);
+    }
+    
+    // Fetch hadiths for this book
+    try {
+      const hadithsData = await fetchHadithsForBook(collection.id, bookNumber);
+      
+      // Group hadiths by chapter ID
+      hadithsData.hadiths.forEach(hadith => {
+        if (!apiHadiths.has(hadith.chapterId)) {
+          apiHadiths.set(hadith.chapterId, []);
+        }
+        apiHadiths.get(hadith.chapterId).push(hadith);
+      });
+    } catch (hadithError) {
+      console.error("Error fetching hadiths from API:", hadithError);
+      // We'll fall back to static data for hadiths
+    }
+  } catch (error) {
+    console.error("Error fetching chapters from API:", error);
+    // Log error and continue with empty chapters array
+    // The UI will show "No chapters available for this book"
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -81,7 +118,10 @@ export default async function BookPage(props: BookPageProps) {
       {/* Chapters and Hadiths */}
       <div className="space-y-12">
         {chapters.map((chapter) => {
-          const hadiths = getHadithsByChapter(chapter.id)
+          // Try to get hadiths from API first, fall back to static data if needed
+          const hadiths = apiHadiths.has(chapter.id) 
+            ? apiHadiths.get(chapter.id) 
+            : getHadithsByChapter(chapter.id);
           
           return (
             <div key={chapter.id} className="border-t pt-8">
@@ -92,10 +132,17 @@ export default async function BookPage(props: BookPageProps) {
                   </h2>
                   <p className="arabic text-lg text-right">{chapter.nameArabic}</p>
                 </div>
+                
+                {/* Display chapter intro if available */}
+                {chapter.intro && (
+                  <div className="mt-4 p-4 bg-muted rounded-md">
+                    <p className="italic text-muted-foreground">{chapter.intro}</p>
+                  </div>
+                )}
               </div>
               
               <div className="space-y-8">
-                {hadiths.map((hadith) => (
+                {hadiths.map((hadith: Hadith) => (
                   <Link 
                     key={hadith.id}
                     href={`/collections/${collection.id}/${book.id}/${hadith.id}`}
@@ -111,6 +158,15 @@ export default async function BookPage(props: BookPageProps) {
                             <span className="bg-secondary/10 text-secondary-foreground px-2 py-1 rounded text-sm">
                               {hadith.grade}
                             </span>
+                          )}
+                          {hadith.grades && hadith.grades.length > 0 && (
+                            <div className="flex flex-wrap gap-1 mt-1">
+                              {hadith.grades.map((gradeInfo, index) => (
+                                <span key={index} className="bg-secondary/5 text-secondary-foreground px-2 py-1 rounded text-xs">
+                                  {gradeInfo.graded_by}: {gradeInfo.grade}
+                                </span>
+                              ))}
+                            </div>
                           )}
                         </div>
                         
@@ -138,6 +194,13 @@ export default async function BookPage(props: BookPageProps) {
                   </div>
                 )}
               </div>
+              
+              {/* Display chapter ending if available */}
+              {chapter.ending && (
+                <div className="mt-6 p-4 bg-muted rounded-md">
+                  <p className="italic text-muted-foreground">{chapter.ending}</p>
+                </div>
+              )}
             </div>
           )
         })}

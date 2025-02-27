@@ -6,6 +6,11 @@ export interface Collection {
   description: string;
   bookCount: number;
   hadithCount: number;
+  // Additional fields from the API
+  hasBooks?: boolean;
+  hasChapters?: boolean;
+  totalAvailableHadith?: number;
+  shortIntro?: string;
 }
 
 // Book (e.g., Book of Revelation)
@@ -26,6 +31,8 @@ export interface Chapter {
   name: string;
   nameArabic: string;
   number: number;
+  intro?: string;
+  ending?: string;
 }
 
 // Hadith
@@ -39,4 +46,11 @@ export interface Hadith {
   textArabic: string;
   grade?: string;
   narrator?: string;
+  chapterNumber?: string;
+  chapterTitle?: string;
+  urn?: number;
+  grades?: {
+    graded_by: string;
+    grade: string;
+  }[];
 }

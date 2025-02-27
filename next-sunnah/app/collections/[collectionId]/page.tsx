@@ -1,40 +1,74 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { collections } from "@/data/collections"
 import { getBooksByCollection } from "@/data/books"
+import { fetchBooksForCollection, fetchCollections } from "@/lib/api"
 import { SearchBar } from "@/components/search-bar"
 
 interface CollectionPageProps {
   params: Promise<{
     collectionId: string
-  }>
+  }>;
+  searchParams?: {
+    page?: string;
+    limit?: string;
+  };
 }
 
 export async function generateMetadata(props: CollectionPageProps) {
   const params = await props.params;
-  const collection = collections.find(c => c.id === params.collectionId)
+  
+  try {
+    // Fetch all collections
+    const { collections } = await fetchCollections(100, 1);
+    const collection = collections.find(c => c.id === params.collectionId);
 
-  if (!collection) {
-    return {
-      title: "Collection Not Found - Sunnah.com",
+    if (!collection) {
+      return {
+        title: "Collection Not Found - Sunnah.com",
+      }
     }
-  }
 
-  return {
-    title: `${collection.name} - Sunnah.com`,
-    description: collection.description,
+    return {
+      title: `${collection.name} - Sunnah.com`,
+      description: collection.description,
+    }
+  } catch (error) {
+    console.error("Error generating metadata:", error);
+    return {
+      title: "Collection - Sunnah.com",
+      description: "Hadith collection from Sunnah.com",
+    }
   }
 }
 
 export default async function CollectionPage(props: CollectionPageProps) {
   const params = await props.params;
-  const collection = collections.find(c => c.id === params.collectionId)
+  
+  // Fetch all collections
+  const { collections } = await fetchCollections(100, 1);
+  const collection = collections.find(c => c.id === params.collectionId);
 
   if (!collection) {
     notFound()
   }
 
-  const books = getBooksByCollection(collection.id)
+  // Get pagination parameters from URL
+  const page = props.searchParams?.page ? parseInt(props.searchParams.page) : 1;
+  const limit = props.searchParams?.limit ? parseInt(props.searchParams.limit) : 50;
+
+  // Try to fetch books from the API, fall back to static data if it fails
+  let books = [];
+  let pagination = null;
+  
+  try {
+    const result = await fetchBooksForCollection(collection.id, limit, page);
+    books = result.books;
+    pagination = result.pagination;
+  } catch (error) {
+    console.error(`Failed to fetch books from API for ${collection.id}:`, error);
+    // Fall back to static data
+    books = getBooksByCollection(collection.id);
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -57,6 +91,9 @@ export default async function CollectionPage(props: CollectionPageProps) {
             <div className="text-sm text-muted-foreground mt-2">
               <div>{collection.bookCount} Books</div>
               <div>{collection.hadithCount} Hadiths</div>
+              {collection.totalAvailableHadith !== undefined && (
+                <div>{collection.totalAvailableHadith} Available Hadiths</div>
+              )}
             </div>
           </div>
           
@@ -65,6 +102,9 @@ export default async function CollectionPage(props: CollectionPageProps) {
             <div className="text-sm text-muted-foreground">
               <div>{collection.bookCount} Books</div>
               <div>{collection.hadithCount} Hadiths</div>
+              {collection.totalAvailableHadith !== undefined && (
+                <div>{collection.totalAvailableHadith} Available</div>
+              )}
             </div>
             <p className="arabic text-2xl font-medium">{collection.nameArabic}</p>
           </div>
@@ -126,6 +166,29 @@ export default async function CollectionPage(props: CollectionPageProps) {
             </div>
           )}
         </div>
+        
+        {/* Pagination */}
+        {pagination && (pagination.previous || pagination.next) && (
+          <div className="flex justify-center mt-8 gap-4">
+            {pagination.previous && (
+              <Link 
+                href={`/collections/${collection.id}?page=${pagination.previous}`}
+                className="px-4 py-2 border rounded-md hover:bg-accent transition-colors"
+              >
+                Previous
+              </Link>
+            )}
+            
+            {pagination.next && (
+              <Link 
+                href={`/collections/${collection.id}?page=${pagination.next}`}
+                className="px-4 py-2 border rounded-md hover:bg-accent transition-colors"
+              >
+                Next
+              </Link>
+            )}
+          </div>
+        )}
       </div>
       
     </div>

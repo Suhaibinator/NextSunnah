@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { collections } from "@/data/collections";
 import { SearchBar } from "@/components/search-bar";
 import { CollectionCard } from "@/components/collection-card";
+import { fetchCollections } from "@/lib/api";
 
-export default function Home() {
-  // Featured collections (showing first 4)
-  const featuredCollections = collections.slice(0, 4);
+export default async function Home() {
+  // Fetch collections from the API and show first 4 as featured
+  const { collections } = await fetchCollections(4, 1);
+  const featuredCollections = collections;
 
   return (
     <div className="container mx-auto px-4 py-8">

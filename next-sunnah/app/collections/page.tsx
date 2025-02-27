@@ -1,13 +1,15 @@
-import { collections } from "@/data/collections"
 import { CollectionCard } from "@/components/collection-card"
 import { SearchBar } from "@/components/search-bar"
+import { fetchCollections } from "@/lib/api"
 
 export const metadata = {
   title: "Collections - Sunnah.com",
   description: "Browse all hadith collections on Sunnah.com",
 }
 
-export default function CollectionsPage() {
+export default async function CollectionsPage() {
+  // Fetch collections from the API
+  const { collections } = await fetchCollections(100, 1);
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
