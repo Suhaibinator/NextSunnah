@@ -8,10 +8,10 @@ interface CollectionPageProps {
   params: Promise<{
     collectionId: string
   }>;
-  searchParams?: {
+  searchParams?: Promise<{
     page?: string;
     limit?: string;
-  };
+  }>;
 }
 
 export async function generateMetadata(props: CollectionPageProps) {
@@ -53,8 +53,9 @@ export default async function CollectionPage(props: CollectionPageProps) {
   }
 
   // Get pagination parameters from URL
-  const page = props.searchParams?.page ? parseInt(props.searchParams.page) : 1;
-  const limit = props.searchParams?.limit ? parseInt(props.searchParams.limit) : 50;
+  const searchParamsValue = await props.searchParams;
+  const page = searchParamsValue?.page ? parseInt(searchParamsValue.page) : 1;
+  const limit = searchParamsValue?.limit ? parseInt(searchParamsValue.limit) : 50;
 
   // Try to fetch books from the API, fall back to static data if it fails
   let books = [];
