@@ -85,7 +85,7 @@ export default async function CollectionPage(props: CollectionPageProps) {
         </div>
         
         {/* Search Bar */}
-        <div className="max-w-2xl mb-8">
+        <div className="max-w-2xl mb-8 md:mx-auto">
           <SearchBar />
         </div>
       </div>
