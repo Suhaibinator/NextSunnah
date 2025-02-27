@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "app/globals.css",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "next-sunnah/components",
+    "utils": "next-sunnah/lib/utils",
+    "ui": "next-sunnah/components/ui",
+    "lib": "next-sunnah/lib",
+    "hooks": "next-sunnah/hooks"
+  },
+  "iconLibrary": "lucide"
+}

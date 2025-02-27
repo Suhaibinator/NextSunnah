@@ -1,0 +1,68 @@
+import { Collection } from "@/types";
+
+export const collections: Collection[] = [
+  {
+    id: "bukhari",
+    name: "Sahih al-Bukhari",
+    nameArabic: "صحيح البخاري",
+    description: "Sahih al-Bukhari is a collection of hadith compiled by Imam Muhammad al-Bukhari (d. 256 AH/870 AD). It is considered the most authentic collection of hadith.",
+    bookCount: 97,
+    hadithCount: 7563,
+  },
+  {
+    id: "muslim",
+    name: "Sahih Muslim",
+    nameArabic: "صحيح مسلم",
+    description: "Sahih Muslim is a collection of hadith compiled by Imam Muslim ibn al-Hajjaj (d. 261 AH/875 AD). It is considered the second most authentic collection of hadith.",
+    bookCount: 54,
+    hadithCount: 7563,
+  },
+  {
+    id: "nasai",
+    name: "Sunan an-Nasa'i",
+    nameArabic: "سنن النسائي",
+    description: "Sunan an-Nasa'i is a collection of hadith compiled by Imam Ahmad an-Nasa'i (d. 303 AH/915 AD).",
+    bookCount: 51,
+    hadithCount: 5761,
+  },
+  {
+    id: "abudawud",
+    name: "Sunan Abi Dawud",
+    nameArabic: "سنن أبي داود",
+    description: "Sunan Abi Dawud is a collection of hadith compiled by Imam Abu Dawud Sulayman ibn al-Ash'ath (d. 275 AH/889 AD).",
+    bookCount: 43,
+    hadithCount: 5274,
+  },
+  {
+    id: "tirmidhi",
+    name: "Jami` at-Tirmidhi",
+    nameArabic: "جامع الترمذي",
+    description: "Jami` at-Tirmidhi is a collection of hadith compiled by Imam Abu `Isa Muhammad at-Tirmidhi (d. 279 AH/892 AD).",
+    bookCount: 49,
+    hadithCount: 3956,
+  },
+  {
+    id: "ibnmajah",
+    name: "Sunan Ibn Majah",
+    nameArabic: "سنن ابن ماجه",
+    description: "Sunan Ibn Majah is a collection of hadith compiled by Imam Muhammad ibn Yazid Ibn Majah al-Qazwini (d. 273 AH/887 AD).",
+    bookCount: 37,
+    hadithCount: 4341,
+  },
+  {
+    id: "malik",
+    name: "Muwatta Malik",
+    nameArabic: "موطأ مالك",
+    description: "Muwatta Malik is a collection of hadith compiled by Imam Malik ibn Anas (d. 179 AH/795 AD).",
+    bookCount: 61,
+    hadithCount: 1594,
+  },
+  {
+    id: "nawawi40",
+    name: "An-Nawawi's 40 Hadith",
+    nameArabic: "الأربعون النووية",
+    description: "An-Nawawi's 40 Hadith is a collection of 40 important hadith compiled by Imam Yahya ibn Sharaf an-Nawawi (d. 676 AH/1277 AD).",
+    bookCount: 1,
+    hadithCount: 42,
+  },
+];

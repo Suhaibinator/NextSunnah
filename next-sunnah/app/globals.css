@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-arabic: 'Noto Naskh Arabic', serif;
+}
+
+:root {
+  /* Base colors */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  
+  /* Card colors */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  
+  /* Popover colors */
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  
+  /* Primary colors - Sunnah.com teal */
+  --primary: oklch(0.7 0.15 180); /* Teal color similar to Sunnah.com */
+  --primary-foreground: oklch(0.985 0 0);
+  
+  /* Secondary colors */
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  
+  /* Muted colors */
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  
+  /* Accent colors */
+  --accent: oklch(0.7 0.1 180); /* Lighter teal */
+  --accent-foreground: oklch(0.145 0 0);
+  
+  /* Destructive colors */
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  
+  /* Border, input, and ring colors */
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.7 0.15 180); /* Teal for focus rings */
+  
+  /* Chart colors */
+  --chart-1: oklch(0.7 0.15 180); /* Teal */
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  
+  /* Border radius */
+  --radius: 0.5rem;
+  
+  /* Sidebar colors */
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.7 0.15 180); /* Teal */
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.7 0.15 180); /* Teal */
+}
+
+.dark {
+  /* Base colors - dark theme */
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  
+  /* Card colors - dark theme */
+  --card: oklch(0.18 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  
+  /* Popover colors - dark theme */
+  --popover: oklch(0.18 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  
+  /* Primary colors - Sunnah.com teal (brighter for dark mode) */
+  --primary: oklch(0.75 0.18 180); /* Brighter teal for dark mode */
+  --primary-foreground: oklch(0.145 0 0);
+  
+  /* Secondary colors - dark theme */
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  
+  /* Muted colors - dark theme */
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  
+  /* Accent colors - dark theme */
+  --accent: oklch(0.75 0.12 180); /* Lighter teal for dark mode */
+  --accent-foreground: oklch(0.145 0 0);
+  
+  /* Destructive colors - dark theme */
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.985 0 0);
+  
+  /* Border, input, and ring colors - dark theme */
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.75 0.18 180); /* Brighter teal for focus rings in dark mode */
+  
+  /* Chart colors - dark theme */
+  --chart-1: oklch(0.75 0.18 180); /* Brighter teal */
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  
+  /* Sidebar colors - dark theme */
+  --sidebar: oklch(0.18 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.75 0.18 180); /* Brighter teal */
+  --sidebar-primary-foreground: oklch(0.145 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.269 0 0);
+  --sidebar-ring: oklch(0.75 0.18 180); /* Brighter teal */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  
+  /* Arabic text styling */
+  .arabic {
+    @apply font-arabic text-right;
+    direction: rtl;
+  }
+}
