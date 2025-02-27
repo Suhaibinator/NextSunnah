@@ -1,6 +1,9 @@
+"use client"
+
 import Link from "next/link"
 import { Collection } from "@/types"
 import { cn } from "@/lib/utils"
+import { useState, useRef, MouseEvent } from "react"
 
 interface CollectionCardProps {
   collection: Collection
@@ -8,18 +11,57 @@ interface CollectionCardProps {
 }
 
 export function CollectionCard({ collection, className }: CollectionCardProps) {
+  const [rotation, setRotation] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    
+    // Get the card's dimensions and position
+    const rect = cardRef.current.getBoundingClientRect();
+    
+    // Calculate mouse position relative to the card center (in percentage)
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    
+    // Set rotation values (inverted for natural feel)
+    setRotation({
+      x: -y * 10, // Rotate around X-axis (horizontal tilt)
+      y: x * 10,  // Rotate around Y-axis (vertical tilt)
+    });
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovering(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovering(false);
+    setRotation({ x: 0, y: 0 });
+  };
+
   return (
     <Link href={`/collections/${collection.id}`}>
-      <div className={cn(
-        "group relative overflow-hidden rounded-lg border bg-card p-6 text-card-foreground shadow transition-all hover:shadow-md",
-        className
-      )}>
+      <div 
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          transform: isHovering 
+            ? `perspective(1000px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) scale3d(1.02, 1.02, 1.02)` 
+            : 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)',
+          transition: 'transform 0.2s ease'
+        }}
+        className={cn(
+          "group relative overflow-hidden rounded-lg border bg-card p-6 text-card-foreground shadow will-change-transform",
+          className
+        )}
+      >
         <div className="mb-4 flex items-center justify-between">
           <h3 className="text-lg font-semibold tracking-tight">{collection.name}</h3>
-        </div>
-        
-        <div className="mb-4">
-          <p className="arabic text-xl font-medium">{collection.nameArabic}</p>
+          <p className="arabic text-xl font-medium text-right">{collection.nameArabic}</p>
         </div>
         
         <p className="mb-4 text-sm text-muted-foreground line-clamp-2">
