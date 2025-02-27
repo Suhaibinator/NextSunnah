@@ -107,12 +107,22 @@ export default async function CollectionInfoPage(props: CollectionInfoPageProps)
             <h1 className="text-3xl md:text-4xl font-bold">{collection.name}</h1>
           </div>
           
-          <div className="flex flex-col items-end">
+          {/* Desktop view: Arabic text with metadata below */}
+          <div className="hidden md:flex flex-col items-end">
             <p className="arabic text-2xl font-medium">{collection.nameArabic}</p>
             <div className="text-sm text-muted-foreground mt-2">
               <div>{collection.bookCount} Books</div>
               <div>{collection.hadithCount} Hadiths</div>
             </div>
+          </div>
+          
+          {/* Mobile view: Metadata and Arabic on same line */}
+          <div className="flex md:hidden justify-between items-center mt-2">
+            <div className="text-sm text-muted-foreground">
+              <div>{collection.bookCount} Books</div>
+              <div>{collection.hadithCount} Hadiths</div>
+            </div>
+            <p className="arabic text-2xl font-medium">{collection.nameArabic}</p>
           </div>
         </div>
         

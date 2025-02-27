@@ -99,8 +99,8 @@ export function Header() {
                     {item.name}
                   </Link>
                 ))}
-                <div className="mt-4 flex justify-end">
-                  <ThemeToggle />
+                <div className={`flex w-full items-center rounded-md p-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground`}>
+                  <ThemeToggle showText={true} className="p-0" />
                 </div>
               </nav>
             </div>
