@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
 import { SearchBar } from "@/components/search-bar"
+import { Logo } from "@/components/logo"
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
@@ -27,12 +28,9 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto max-w-7xl flex h-16 items-center justify-between px-4 md:px-6 lg:px-8">
-        <div className="flex items-center gap-2 pl-0 md:pl-6">
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="flex flex-col space-y-1 text-sm leading-none">
-              <span className="text-xl font-bold tracking-wide text-primary">SUNNAH.COM</span>
-              <span className="text-xs text-muted-foreground">The Hadith of the Prophet Muhammad (صلى الله عليه و سلم) at your fingertips</span>
-            </div>
+        <div className="flex items-center pl-0 md:pl-6">
+          <Link href="/" className="flex items-center">
+            <Logo width={240} className="flex-shrink-0" />
           </Link>
         </div>
 
