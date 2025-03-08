@@ -48,22 +48,6 @@ export default function Home() {
           ))}
         </div>
       </section>
-
-      {/* About Section */}
-      <section className="py-12 border-t">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-6">About Sunnah.com</h2>
-          <p className="text-muted-foreground mb-4">
-            Sunnah.com is a free resource for all Muslims and those interested in Islam to access 
-            authentic hadith collections. Our mission is to provide easy access to the teachings 
-            of Prophet Muhammad <span className="arabic">(صلى الله عليه و سلم)</span>.
-          </p>
-          <p className="text-muted-foreground">
-            The collections include Sahih al-Bukhari, Sahih Muslim, Sunan an-Nasa&apos;i, and many more, 
-            all available in both English and Arabic.
-          </p>
-        </div>
-      </section>
     </div>
   );
 }
