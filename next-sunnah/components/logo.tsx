@@ -43,7 +43,9 @@ export function Logo({
   const color = themeColor || fallbackColor;
 
   // Construct the dynamic URL
-  const imageUrl = `https://imgstore.org/icon/6a08zkwh789g/${color}/${width*5}`;
+  const imageUrl = `https://imgstore.org/icon/6a08zkwh789g/${color}/${
+    width * 3
+  }`;
 
   if (!mounted) {
     // Return a placeholder with the width to avoid layout shift

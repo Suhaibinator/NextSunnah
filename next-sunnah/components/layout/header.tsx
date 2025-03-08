@@ -10,7 +10,7 @@ import { Logo } from "@/components/logo"
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
-  const [showSubheader, setShowSubheader] = React.useState(true)d
+  const [showSubheader, setShowSubheader] = React.useState(true)
   const pathname = usePathname()
 
   // Handle scroll events to show/hide subheader
@@ -46,34 +46,32 @@ export function Header() {
     setIsMenuOpen(false)
   }
 
-  const navItems = [
-    { name: "Home", href: "/" },
-    { name: "Collections", href: "/collections" },
-  ]
+  // Empty navigation items array
+  const navItems = []
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       {/* Subheader */}
       <div 
-        className={`w-full bg-gray-800 text-white transition-all duration-300 ${
-          showSubheader ? "h-8 opacity-100" : "h-0 opacity-0 overflow-hidden"
+        className={`w-full bg-secondary text-secondary-foreground transition-all duration-300 ${
+          showSubheader && !isMenuOpen ? "h-8 opacity-100" : "h-0 opacity-0 overflow-hidden"
         }`}
       >
         <div className="container mx-auto max-w-7xl flex h-full items-center justify-end px-4 md:px-6 lg:px-8 text-sm">
           <nav className="flex items-center gap-4">
-            <Link href="/quran" className="hover:text-gray-300">
+            <Link href="/quran" className="hover:text-primary transition-colors">
               Qur&apos;an
             </Link>
-            <span className="text-gray-400">|</span>
-            <Link href="/sunnah" className="font-bold hover:text-gray-300">
+            <span className="text-muted-foreground">|</span>
+            <Link href="/sunnah" className="font-bold hover:text-primary transition-colors">
               Sunnah
             </Link>
-            <span className="text-gray-400">|</span>
-            <Link href="/prayer-times" className="hover:text-gray-300">
+            <span className="text-muted-foreground">|</span>
+            <Link href="/prayer-times" className="hover:text-primary transition-colors">
               Prayer Times
             </Link>
-            <span className="text-gray-400">|</span>
-            <Link href="/audio" className="hover:text-gray-300">
+            <span className="text-muted-foreground">|</span>
+            <Link href="/audio" className="hover:text-primary transition-colors">
               Audio
             </Link>
           </nav>
@@ -85,13 +83,6 @@ export function Header() {
             <Logo width={240} className="flex-shrink-0" />
           </Link>
         </div>
-
-        {/* Header Search Bar (hidden on homepage) */}
-        {pathname !== "/" && (
-          <div className="hidden md:block w-1/3 mx-4">
-            <SearchBar size="compact" />
-          </div>
-        )}
 
         {/* Mobile menu button */}
         <button
@@ -106,21 +97,14 @@ export function Header() {
           )}
         </button>
 
-        {/* Desktop navigation */}
+        {/* Desktop navigation with search bar on the right */}
         <nav className="hidden md:flex items-center gap-6 pr-6">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                pathname === item.href
-                  ? "text-primary"
-                  : "text-muted-foreground"
-              }`}
-            >
-              {item.name}
-            </Link>
-          ))}
+          {/* Search Bar (hidden on homepage) - desktop only */}
+          {pathname !== "/" && (
+            <div className="w-48 lg:w-64">
+              <SearchBar size="compact" />
+            </div>
+          )}
           <ThemeToggle />
         </nav>
 
@@ -128,27 +112,7 @@ export function Header() {
         {isMenuOpen && (
           <div className="fixed inset-0 top-16 z-50 grid h-[calc(100vh-4rem)] grid-flow-row auto-rows-max overflow-auto p-6 pb-32 shadow-md animate-in slide-in-from-top md:hidden bg-background">
             <div className="relative z-20 grid gap-6 p-4 rounded-md">
-              {/* Mobile Search Bar (hidden on homepage) */}
-              {pathname !== "/" && (
-                <div className="mb-4">
-                  <SearchBar size="compact" />
-                </div>
-              )}
               <nav className="grid grid-flow-row auto-rows-max text-sm">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`flex w-full items-center rounded-md p-2 text-sm font-medium ${
-                      pathname === item.href
-                        ? "bg-accent text-accent-foreground"
-                        : "hover:bg-accent hover:text-accent-foreground"
-                    }`}
-                    onClick={closeMenu}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
                 <div className={`flex w-full items-center rounded-md p-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground`}>
                   <ThemeToggle showText={true} className="p-0" />
                 </div>
@@ -157,6 +121,15 @@ export function Header() {
           </div>
         )}
       </div>
+      
+      {/* Mobile Search Bar Row (hidden on homepage) */}
+      {pathname !== "/" && (
+        <div className="md:hidden w-full border-t border-border bg-background">
+          <div className="container mx-auto max-w-7xl px-4 py-2">
+            <SearchBar size="compact" />
+          </div>
+        </div>
+      )}
     </header>
   )
 }
