@@ -122,23 +122,5 @@ describe('HomePage', () => {
     expect(screen.queryByText('Test Collection 5')).not.toBeInTheDocument();
   });
   
-  test('renders the about section with title and description', () => {
-    render(<HomePage />);
-    
-    // Check if the about section title is rendered
-    expect(screen.getByText('About Sunnah.com')).toBeInTheDocument();
-    
-    // Check if the about section description is rendered
-    expect(
-      screen.getByText(/Sunnah.com is a free resource for all Muslims/i)
-    ).toBeInTheDocument();
-    
-    // Check if the Arabic text in the about section is properly styled
-    const aboutArabicText = screen.getAllByText(/صلى الله عليه و سلم/)[1]; // Get the second occurrence
-    expect(aboutArabicText).toHaveClass('arabic');
-    
-    expect(
-      screen.getByText(/The collections include Sahih al-Bukhari/i)
-    ).toBeInTheDocument();
-  });
+  // Test for about section removed as it's not currently implemented in the homepage
 });

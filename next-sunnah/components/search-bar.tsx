@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Search } from "lucide-react"
+import { Search, Filter, HelpCircle } from "lucide-react"
 
 interface SearchBarProps {
   size?: "default" | "compact"
@@ -30,12 +30,33 @@ export function SearchBar({ size = "default" }: SearchBarProps) {
           onChange={(e) => setQuery(e.target.value)}
         />
       </div>
-      <button
-        type="submit"
-        className={`absolute right-1 top-1/2 -translate-y-1/2 rounded-md bg-primary ${isCompact ? 'px-2 py-0.5 text-xs' : 'px-3 py-1 text-xs'} font-medium text-primary-foreground`}
-      >
-        Search
-      </button>
+      <div className="absolute right-1 top-1/2 -translate-y-1/2 flex items-center gap-1">
+        <button
+          type="submit"
+          className={`rounded-md bg-primary ${isCompact ? 'p-1' : 'p-1.5'} flex items-center justify-center text-primary-foreground`}
+          aria-label="Search"
+        >
+          <Search className={`${isCompact ? 'h-3.5 w-3.5' : 'h-4 w-4'}`} />
+        </button>
+        
+        <button
+          type="button"
+          className={`rounded-md border border-primary/20 ${isCompact ? 'px-2 py-0.5' : 'px-3 py-1'} text-xs font-medium flex items-center gap-1`}
+          onClick={() => console.log("Filter clicked")}
+        >
+          <Filter className={`${isCompact ? 'h-3 w-3' : 'h-4 w-4'}`} />
+          <span className="hidden md:inline">Filter</span>
+        </button>
+        
+        <button
+          type="button"
+          className={`rounded-md border border-primary/20 ${isCompact ? 'px-2 py-0.5' : 'px-3 py-1'} text-xs font-medium flex items-center gap-1`}
+          onClick={() => console.log("Tips clicked")}
+        >
+          <HelpCircle className={`${isCompact ? 'h-3 w-3' : 'h-4 w-4'}`} />
+          <span className="hidden md:inline">Tips</span>
+        </button>
+      </div>
     </form>
   )
 }

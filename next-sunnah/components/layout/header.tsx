@@ -96,7 +96,7 @@ export function Header() {
         <nav className="hidden md:flex items-center gap-6 pr-6">
           {/* Search Bar (hidden on homepage) - desktop only */}
           {pathname !== "/" && (
-            <div className="w-48 lg:w-64">
+            <div className="w-64 lg:w-80">
               <SearchBar size="compact" />
             </div>
           )}
