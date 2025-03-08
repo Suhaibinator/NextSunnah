@@ -76,7 +76,7 @@ export function SearchBar({ size = "default" }: SearchBarProps) {
             <DialogHeader>
               <DialogTitle>Select Collections</DialogTitle>
             </DialogHeader>
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-4 flex flex-wrap gap-2 justify-center">
               {collections.map((collection) => {
                 const isSelected = tempSelectedCollections.includes(collection.id);
                 return (
