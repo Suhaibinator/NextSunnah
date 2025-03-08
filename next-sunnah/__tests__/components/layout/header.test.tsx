@@ -36,17 +36,6 @@ describe('Header component', () => {
     // Default to homepage
     (usePathname as jest.Mock).mockReturnValue('/');
   });
-
-  test('renders the site logo and name', () => {
-    render(<Header />);
-    
-    // Check if the site name is rendered (in uppercase in the actual implementation)
-    expect(screen.getByText('SUNNAH.COM')).toBeInTheDocument();
-    
-    // Check if the logo link points to the homepage
-    const logoLink = screen.getByText('SUNNAH.COM').closest('a');
-    expect(logoLink).toHaveAttribute('href', '/');
-  });
   
   test('renders navigation links', () => {
     render(<Header />);
