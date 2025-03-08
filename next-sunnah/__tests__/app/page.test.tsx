@@ -67,10 +67,14 @@ describe('HomePage', () => {
   test('renders the hero section with title and description', () => {
     render(<HomePage />);
      
-    // Check if the description is rendered
+    // Check if the description is rendered - using regex to handle the text being split across elements
     expect(
-      screen.getByText('The Hadith of the Prophet Muhammad (صلى الله عليه و سلم) at your fingertips')
+      screen.getByText(/The Hadith of the Prophet Muhammad.*at your fingertips/i)
     ).toBeInTheDocument();
+    
+    // Check if the Arabic text is properly styled
+    const arabicTexts = screen.getAllByText(/صلى الله عليه و سلم/);
+    expect(arabicTexts[0]).toHaveClass('arabic'); // First occurrence in the hero section
   });
   
   test('renders the search bar', () => {
@@ -128,6 +132,10 @@ describe('HomePage', () => {
     expect(
       screen.getByText(/Sunnah.com is a free resource for all Muslims/i)
     ).toBeInTheDocument();
+    
+    // Check if the Arabic text in the about section is properly styled
+    const aboutArabicText = screen.getAllByText(/صلى الله عليه و سلم/)[1]; // Get the second occurrence
+    expect(aboutArabicText).toHaveClass('arabic');
     
     expect(
       screen.getByText(/The collections include Sahih al-Bukhari/i)

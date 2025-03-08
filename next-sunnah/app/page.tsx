@@ -12,7 +12,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="py-12 md:py-20 text-center">
         <h1 className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-muted-foreground">
-          The Hadith of the Prophet Muhammad (صلى الله عليه و سلم) at your fingertips
+          The Hadith of the Prophet Muhammad <span className="arabic">(صلى الله عليه و سلم)</span> at your fingertips
         </h1>
         
         {/* Search Bar */}
@@ -56,7 +56,7 @@ export default function Home() {
           <p className="text-muted-foreground mb-4">
             Sunnah.com is a free resource for all Muslims and those interested in Islam to access 
             authentic hadith collections. Our mission is to provide easy access to the teachings 
-            of Prophet Muhammad (صلى الله عليه و سلم).
+            of Prophet Muhammad <span className="arabic">(صلى الله عليه و سلم)</span>.
           </p>
           <p className="text-muted-foreground">
             The collections include Sahih al-Bukhari, Sahih Muslim, Sunan an-Nasa&apos;i, and many more, 
