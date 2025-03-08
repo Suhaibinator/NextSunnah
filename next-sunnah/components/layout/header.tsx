@@ -54,19 +54,19 @@ export function Header() {
       >
         <div className="container mx-auto max-w-7xl flex h-full items-center justify-end px-4 md:px-6 lg:px-8 text-sm">
           <nav className="flex items-center gap-4">
-            <Link href="/quran" className="hover:text-primary transition-colors">
+            <Link href="https://quran.com/" className="hover:text-primary transition-colors">
               Qur&apos;an
             </Link>
             <span className="text-muted-foreground">|</span>
-            <Link href="/sunnah" className="font-bold hover:text-primary transition-colors">
+            <Link href="/" className="font-bold hover:text-primary transition-colors">
               Sunnah
             </Link>
             <span className="text-muted-foreground">|</span>
-            <Link href="/prayer-times" className="hover:text-primary transition-colors">
+            <Link href="https://salah.com/" className="hover:text-primary transition-colors">
               Prayer Times
             </Link>
             <span className="text-muted-foreground">|</span>
-            <Link href="/audio" className="hover:text-primary transition-colors">
+            <Link href="https://quranicaudio.com/" className="hover:text-primary transition-colors">
               Audio
             </Link>
           </nav>
