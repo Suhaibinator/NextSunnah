@@ -172,21 +172,21 @@ describe("Header component", () => {
       // Check if the subheader links are rendered within the subheader container
       const quranLink = within(subheaderContainer).getByText(/qur'an/i);
       expect(quranLink).toBeInTheDocument();
-      expect(quranLink).toHaveAttribute("href", "/quran");
+      expect(quranLink).toHaveAttribute("href", "https://quran.com/");
 
       const sunnahLink = within(subheaderContainer).getByText(/sunnah/i);
       expect(sunnahLink).toBeInTheDocument();
-      expect(sunnahLink).toHaveAttribute("href", "/sunnah");
+      expect(sunnahLink).toHaveAttribute("href", "/");
       expect(sunnahLink).toHaveClass("font-bold");
 
       const prayerTimesLink =
         within(subheaderContainer).getByText(/prayer times/i);
       expect(prayerTimesLink).toBeInTheDocument();
-      expect(prayerTimesLink).toHaveAttribute("href", "/prayer-times");
+      expect(prayerTimesLink).toHaveAttribute("href", "https://salah.com/");
 
       const audioLink = within(subheaderContainer).getByText(/audio/i);
       expect(audioLink).toBeInTheDocument();
-      expect(audioLink).toHaveAttribute("href", "/audio");
+      expect(audioLink).toHaveAttribute("href", "https://quranicaudio.com/");
     }
   });
 
