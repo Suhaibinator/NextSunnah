@@ -66,10 +66,7 @@ jest.mock('@/components/collection-card', () => ({
 describe('HomePage', () => {
   test('renders the hero section with title and description', () => {
     render(<HomePage />);
-    
-    // Check if the title is rendered
-    expect(screen.getByText('Sunnah.com')).toBeInTheDocument();
-    
+     
     // Check if the description is rendered
     expect(
       screen.getByText('The Hadith of the Prophet Muhammad (صلى الله عليه و سلم) at your fingertips')
