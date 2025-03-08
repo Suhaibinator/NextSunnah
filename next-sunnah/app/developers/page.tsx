@@ -1,33 +1,25 @@
+import Link from "next/link";
+
 export default function DevelopersPage() {
-  // API endpoints
-  const apiEndpoints = [
+  // Repository links
+  const repositories = [
     {
       id: 1,
-      endpoint: "/api/collections",
-      method: "GET",
-      description: "Returns a list of all hadith collections available on Sunnah.com",
-      parameters: "None"
+      name: "The Sunnah.com website",
+      language: "PHP",
+      url: "https://github.com/sunnah-com/website"
     },
     {
       id: 2,
-      endpoint: "/api/collections/{collectionId}",
-      method: "GET",
-      description: "Returns detailed information about a specific hadith collection",
-      parameters: "collectionId (string): The ID of the collection"
+      name: "Sunnah.com API",
+      language: "Python (Flask)",
+      url: "https://github.com/sunnah-com/api"
     },
     {
       id: 3,
-      endpoint: "/api/collections/{collectionId}/books",
-      method: "GET",
-      description: "Returns a list of all books in a specific hadith collection",
-      parameters: "collectionId (string): The ID of the collection"
-    },
-    {
-      id: 4,
-      endpoint: "/api/hadiths",
-      method: "GET",
-      description: "Search for hadiths across all collections",
-      parameters: "q (string): Search query, collection (string, optional): Filter by collection"
+      name: "Corrections",
+      language: "Python and JavaScript",
+      url: "https://github.com/sunnah-com/corrections"
     }
   ];
 
@@ -37,128 +29,39 @@ export default function DevelopersPage() {
       
       <div className="prose dark:prose-invert max-w-none mb-12">
         <p className="text-lg mb-6">
-          Welcome to the Sunnah.com developer resources. We provide APIs and tools to help developers integrate hadith content into their applications.
+          At <Link href="/" className="text-primary hover:underline">sunnah.com</Link> we are committed to providing an <Link href="/about" className="text-primary hover:underline">open platform for hadith</Link> that includes data and tools. To this end, we have an API for consumption and <a href="https://github.com/sunnah-com" className="text-primary hover:underline">several open-source projects</a> on which we invite contributions.
         </p>
         
-        <h2 className="text-2xl font-semibold mt-8 mb-4">API Access</h2>
+        <h2 className="text-2xl font-semibold mt-8 mb-4">API</h2>
         <p>
-          Our API allows developers to access hadith collections, search for specific hadiths, and retrieve detailed information about collections, books, and chapters.
+          Our API offers access to a portion of our data comprising the sunnah of the Prophet Muhammad (ﷺ). We will add to the data available as we complete manual checks of the data. API documentation is available at <a href="https://sunnah.stoplight.io/docs/api/" className="text-primary hover:underline">sunnah.stoplight.io/docs/api/</a>. You will need an API key to access this data; you can <a href="https://github.com/sunnah-com/api/issues/new?template=request-for-api-access.md&title=Request+for+API+access%3A+%5BYour+Name%5D" className="text-primary hover:underline">create an issue</a> on our GitHub repo to request one. You may also request an offline dump of hadith data if that is more suited to your needs (not available yet).
         </p>
         
-        <h3 className="text-xl font-semibold mt-6 mb-3">Getting Started</h3>
-        <ol className="list-decimal pl-6 mb-6">
-          <li>Sign up for an API key by <a href="/contact" className="text-primary hover:underline">contacting us</a></li>
-          <li>Read the documentation below to understand the available endpoints</li>
-          <li>Implement the API in your application</li>
-          <li>Follow our usage guidelines and attribution requirements</li>
-        </ol>
-        
-        <h3 className="text-xl font-semibold mt-6 mb-3">Authentication</h3>
+        <h2 className="text-2xl font-semibold mt-8 mb-4">Contribute</h2>
         <p>
-          All API requests require an API key to be included in the request headers:
+          We are excited that you are interested in contributing to the sunnah.com project! Our code repositories are hosted on GitHub:
         </p>
-        <pre className="bg-muted p-4 rounded-md overflow-x-auto">
-          <code>
-{`Authorization: Bearer YOUR_API_KEY`}
-          </code>
-        </pre>
-      </div>
-      
-      <div className="mb-12">
-        <h2 className="text-2xl font-semibold mb-6">API Reference</h2>
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr className="bg-muted">
-                <th className="border px-4 py-2 text-left">Endpoint</th>
-                <th className="border px-4 py-2 text-left">Method</th>
-                <th className="border px-4 py-2 text-left">Description</th>
-                <th className="border px-4 py-2 text-left">Parameters</th>
-              </tr>
-            </thead>
-            <tbody>
-              {apiEndpoints.map((endpoint) => (
-                <tr key={endpoint.id}>
-                  <td className="border px-4 py-2 font-mono text-sm">{endpoint.endpoint}</td>
-                  <td className="border px-4 py-2">{endpoint.method}</td>
-                  <td className="border px-4 py-2">{endpoint.description}</td>
-                  <td className="border px-4 py-2">{endpoint.parameters}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      
-      <div className="mb-12">
-        <h2 className="text-2xl font-semibold mb-6">Example Usage</h2>
-        <div className="bg-muted p-4 rounded-md overflow-x-auto mb-6">
-          <pre>
-            <code>
-{`// JavaScript example using fetch
-const fetchCollections = async () => {
-  try {
-    const response = await fetch('https://api.sunnah.com/v1/collections', {
-      headers: {
-        'Authorization': 'Bearer YOUR_API_KEY'
-      }
-    });
-    
-    const data = await response.json();
-    console.log(data);
-  } catch (error) {
-    console.error('Error fetching collections:', error);
-  }
-};
-
-fetchCollections();`}
-            </code>
-          </pre>
+        
+        <div className="mt-4 space-y-4">
+          {repositories.map((repo) => (
+            <div key={repo.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-muted rounded-lg">
+              <div>
+                <a href={repo.url} className="font-medium text-primary hover:underline">{repo.name}</a>
+                <p className="text-sm text-muted-foreground">{repo.language}</p>
+              </div>
+              <a 
+                href={repo.url}
+                className="mt-2 sm:mt-0 inline-flex items-center justify-center px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
+              >
+                View Repository
+              </a>
+            </div>
+          ))}
         </div>
         
-        <div className="bg-muted p-4 rounded-md overflow-x-auto">
-          <pre>
-            <code>
-{`# Python example using requests
-import requests
-
-def fetch_collections():
-    try:
-        response = requests.get(
-            'https://api.sunnah.com/v1/collections',
-            headers={'Authorization': 'Bearer YOUR_API_KEY'}
-        )
-        
-        data = response.json()
-        print(data)
-    except Exception as e:
-        print(f"Error fetching collections: {e}")
-
-fetch_collections()`}
-            </code>
-          </pre>
-        </div>
-      </div>
-      
-      <div className="bg-card p-6 rounded-lg shadow-sm">
-        <h2 className="text-xl font-semibold mb-4">Open Source Contributions</h2>
-        <p className="mb-4">
-          Sunnah.com is an open-source project, and we welcome contributions from developers. If you&apos;re interested in contributing to our codebase, check out our GitHub repository.
+        <p className="mt-6">
+          If you have any questions or want to contact the maintainers, <a href="https://github.com/sunnah-com/api/issues/new?template=request-for-api-access.md&title=Request+for+API+access%3A+%5BYour+Name%5D" className="text-primary hover:underline">create an issue</a> on GitHub or <Link href="/contact" className="text-primary hover:underline">send us a message</Link>! We will get back to you as soon as we can, in sha Allah.
         </p>
-        <div className="flex space-x-4">
-          <a 
-            href="#"
-            className="inline-block bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-md font-medium"
-          >
-            GitHub Repository
-          </a>
-          <a 
-            href="/contact"
-            className="inline-block bg-muted hover:bg-muted/80 px-4 py-2 rounded-md font-medium"
-          >
-            Contact the Dev Team
-          </a>
-        </div>
       </div>
     </div>
   );
