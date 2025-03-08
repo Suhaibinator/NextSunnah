@@ -1,7 +1,19 @@
 "use client"
 
-import { useState } from "react"
-import { Search, Filter, HelpCircle } from "lucide-react"
+import { useState, useEffect } from "react"
+import { Search, Filter, HelpCircle, ExternalLink, Check } from "lucide-react"
+import Link from "next/link"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogHeader, 
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+  DialogClose
+} from "@/components/ui/dialog"
+import { collections } from "@/data/collections"
 
 interface SearchBarProps {
   size?: "default" | "compact"
@@ -9,11 +21,21 @@ interface SearchBarProps {
 
 export function SearchBar({ size = "default" }: SearchBarProps) {
   const [query, setQuery] = useState("")
+  const [selectedCollections, setSelectedCollections] = useState<string[]>([])
+  const [tempSelectedCollections, setTempSelectedCollections] = useState<string[]>([])
+  const [open, setOpen] = useState(false)
+  
+  // Initialize temporary selections when dialog opens
+  useEffect(() => {
+    if (open) {
+      setTempSelectedCollections([...selectedCollections])
+    }
+  }, [open, selectedCollections])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // In a real app, this would redirect to search results
-    console.log("Search query:", query)
+    console.log("Search query:", query, "Selected collections:", selectedCollections)
   }
 
   const isCompact = size === "compact"
@@ -31,23 +53,127 @@ export function SearchBar({ size = "default" }: SearchBarProps) {
         />
       </div>
       <div className="absolute right-1 top-1/2 -translate-y-1/2 flex items-center gap-1">
-        <button
-          type="button"
-          className={`rounded-md border border-primary/20 ${isCompact ? 'px-2 py-0.5' : 'px-3 py-1'} text-xs font-medium flex items-center gap-1`}
-          onClick={() => console.log("Filter clicked")}
-        >
-          <Filter className={`${isCompact ? 'h-3 w-3' : 'h-4 w-4'}`} />
-          {!isCompact && <span className="hidden md:inline">Filter</span>}
-        </button>
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger asChild>
+            <button
+              type="button"
+              className={`rounded-md border border-primary/20 ${isCompact ? 'px-2 py-0.5' : 'px-3 py-1'} text-xs font-medium flex items-center gap-1 hover:bg-primary/10 transition-colors ${selectedCollections.length > 0 ? 'bg-primary/5' : ''}`}
+            >
+              <Filter className={`${isCompact ? 'h-3 w-3' : 'h-4 w-4'}`} />
+              {!isCompact && (
+                <>
+                  <span className="hidden md:inline">Filter</span>
+                  {selectedCollections.length > 0 && (
+                    <span className="ml-1 rounded-full bg-primary/20 px-1.5 py-0.5 text-xs">
+                      {selectedCollections.length}
+                    </span>
+                  )}
+                </>
+              )}
+            </button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Select Collections</DialogTitle>
+            </DialogHeader>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {collections.map((collection) => {
+                const isSelected = tempSelectedCollections.includes(collection.id);
+                return (
+                  <button
+                    key={collection.id}
+                    type="button"
+                    onClick={() => {
+                      setTempSelectedCollections(prev => 
+                        isSelected 
+                          ? prev.filter(id => id !== collection.id)
+                          : [...prev, collection.id]
+                      );
+                    }}
+                    className={`flex items-center gap-1 rounded-full border px-3 py-1 text-xs transition-colors ${
+                      isSelected 
+                        ? 'border-primary bg-primary/10 text-primary' 
+                        : 'border-primary/20 hover:border-primary/30 hover:bg-primary/5'
+                    }`}
+                  >
+                    {isSelected && <Check className="h-3 w-3" />}
+                    {collection.name}
+                  </button>
+                );
+              })}
+            </div>
+            <DialogFooter className="mt-6 flex justify-between sm:justify-between">
+              <button
+                type="button"
+                onClick={() => setTempSelectedCollections([])}
+                className="rounded-md border border-primary/20 px-4 py-2 text-xs font-medium hover:bg-primary/5 transition-colors"
+              >
+                Clear
+              </button>
+              <DialogClose asChild>
+                <button
+                  type="button"
+                  onClick={() => setSelectedCollections(tempSelectedCollections)}
+                  className="rounded-md bg-primary px-4 py-2 text-xs font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
+                >
+                  Apply
+                </button>
+              </DialogClose>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
 
-        <button
-          type="button"
-          className={`rounded-md border border-primary/20 ${isCompact ? 'px-2 py-0.5' : 'px-3 py-1'} text-xs font-medium flex items-center gap-1`}
-          onClick={() => console.log("Tips clicked")}
-        >
-          <HelpCircle className={`${isCompact ? 'h-3 w-3' : 'h-4 w-4'}`} />
-          {!isCompact && <span className="hidden md:inline">Tips</span>}
-        </button>
+        <Popover>
+          <PopoverTrigger asChild>
+            <button
+              type="button"
+              className={`rounded-md border border-primary/20 ${isCompact ? 'px-2 py-0.5' : 'px-3 py-1'} text-xs font-medium flex items-center gap-1 hover:bg-primary/10 transition-colors`}
+              aria-label="Search Tips"
+            >
+              <HelpCircle className={`${isCompact ? 'h-3 w-3' : 'h-4 w-4'}`} />
+              {!isCompact && <span className="hidden md:inline">Tips</span>}
+            </button>
+          </PopoverTrigger>
+          <PopoverContent className="w-80 p-4">
+            <div className="space-y-3">
+              <h3 className="font-medium">Search Tips</h3>
+              
+              <div className="space-y-2 text-sm">
+                <div>
+                  <p className="font-medium">Quotes e.g. &quot;pledge allegiance&quot;</p>
+                  <p className="text-muted-foreground">Searches for the whole phrase instead of individual words</p>
+                </div>
+                
+                <div>
+                  <p className="font-medium">Wildcards e.g. test*</p>
+                  <p className="text-muted-foreground">Matches any set of one or more characters. For example test* would result in test, tester, testers, etc.</p>
+                </div>
+                
+                <div>
+                  <p className="font-medium">Fuzzy Search e.g. swore~</p>
+                  <p className="text-muted-foreground">Finds terms that are similar in spelling. For example swore~ would result in swore, snore, score, etc.</p>
+                </div>
+                
+                <div>
+                  <p className="font-medium">Term Boosting e.g. pledge^4 hijrah</p>
+                  <p className="text-muted-foreground">Boosts words with higher relevance. Here, the word pledge will have higher weight than hijrah</p>
+                </div>
+                
+                <div>
+                  <p className="font-medium">Boolean Operators e.g. (&quot;pledge allegiance&quot; OR &quot;shelter&quot;) AND prayer</p>
+                  <p className="text-muted-foreground">Create complex phrase and word queries by using Boolean logic.</p>
+                </div>
+                
+                <Link 
+                  href="/searchtips" 
+                  className="flex items-center gap-1 text-primary hover:underline mt-2 font-medium"
+                >
+                  More <ExternalLink className="h-3 w-3" />
+                </Link>
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
 
         <button
           type="submit"
