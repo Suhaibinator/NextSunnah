@@ -11,12 +11,9 @@ export default function Home() {
     <div className="container mx-auto px-4 py-8">
       {/* Hero Section */}
       <section className="py-12 md:py-20 text-center">
-        <h1 className="text-4xl md:text-6xl font-bold mb-6">
-          <span className="text-primary">Sunnah.com</span>
-        </h1>
-        <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-muted-foreground">
+        <h1 className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-muted-foreground">
           The Hadith of the Prophet Muhammad (صلى الله عليه و سلم) at your fingertips
-        </p>
+        </h1>
         
         {/* Search Bar */}
         <div className="max-w-2xl mx-auto mb-12">
