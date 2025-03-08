@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@/test-utils';
+import { render, screen, fireEvent, act, within } from '@/test-utils';
 import { Header } from '@/components/layout/header';
 import { usePathname } from 'next/navigation';
 
@@ -7,6 +7,12 @@ import { usePathname } from 'next/navigation';
 jest.mock('next/navigation', () => ({
   usePathname: jest.fn(),
 }));
+
+// Mock window.scrollY and scroll event
+const mockScrollY = jest.fn();
+Object.defineProperty(window, 'scrollY', {
+  get: () => mockScrollY(),
+});
 
 // Mock the SearchBar component
 jest.mock('@/components/search-bar', () => ({
@@ -35,6 +41,10 @@ describe('Header component', () => {
   beforeEach(() => {
     // Default to homepage
     (usePathname as jest.Mock).mockReturnValue('/');
+    // Reset mock for scrollY
+    mockScrollY.mockReturnValue(0);
+    // Reset any event listeners
+    jest.clearAllMocks();
   });
   
   test('renders navigation links', () => {
@@ -145,5 +155,73 @@ describe('Header component', () => {
     // Check if it doesn't have the active class
     expect(homeLink).not.toHaveClass('text-primary');
     expect(homeLink).toHaveClass('text-muted-foreground');
+  });
+
+  test('renders subheader with correct links', () => {
+    render(<Header />);
+    
+    // Get the subheader container first
+    const subheaderContainer = screen.getByText(/qur'an/i).closest('nav');
+    expect(subheaderContainer).not.toBeNull();
+    
+    if (subheaderContainer) {
+      // Check if the subheader links are rendered within the subheader container
+      const quranLink = within(subheaderContainer).getByText(/qur'an/i);
+      expect(quranLink).toBeInTheDocument();
+      expect(quranLink).toHaveAttribute('href', '/quran');
+      
+      const sunnahLink = within(subheaderContainer).getByText(/sunnah/i);
+      expect(sunnahLink).toBeInTheDocument();
+      expect(sunnahLink).toHaveAttribute('href', '/sunnah');
+      expect(sunnahLink).toHaveClass('font-bold');
+      
+      const prayerTimesLink = within(subheaderContainer).getByText(/prayer times/i);
+      expect(prayerTimesLink).toBeInTheDocument();
+      expect(prayerTimesLink).toHaveAttribute('href', '/prayer-times');
+      
+      const audioLink = within(subheaderContainer).getByText(/audio/i);
+      expect(audioLink).toBeInTheDocument();
+      expect(audioLink).toHaveAttribute('href', '/audio');
+    }
+  });
+  
+  test('hides subheader when scrolling down and shows when scrolling up', () => {
+    render(<Header />);
+    
+    // Get the subheader div (the one with the transition classes)
+    const quranElement = screen.getByText(/qur'an/i);
+    const containerDiv = quranElement.closest('div');
+    expect(containerDiv).not.toBeNull();
+    
+    if (containerDiv && containerDiv.parentElement) {
+      const subheader = containerDiv.parentElement;
+      
+      // Initially, subheader should be visible
+      expect(subheader).toHaveClass('h-8');
+      expect(subheader).toHaveClass('opacity-100');
+      expect(subheader).not.toHaveClass('opacity-0');
+      
+      // Simulate scrolling down
+      mockScrollY.mockReturnValue(100);
+      act(() => {
+        window.dispatchEvent(new Event('scroll'));
+      });
+      
+      // Subheader should now be hidden
+      expect(subheader).toHaveClass('h-0');
+      expect(subheader).toHaveClass('opacity-0');
+      expect(subheader).not.toHaveClass('opacity-100');
+      
+      // Simulate scrolling up
+      mockScrollY.mockReturnValue(50);
+      act(() => {
+        window.dispatchEvent(new Event('scroll'));
+      });
+      
+      // Subheader should be visible again
+      expect(subheader).toHaveClass('h-8');
+      expect(subheader).toHaveClass('opacity-100');
+      expect(subheader).not.toHaveClass('opacity-0');
+    }
   });
 });
