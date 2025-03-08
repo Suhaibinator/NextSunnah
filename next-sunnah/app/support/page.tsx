@@ -34,9 +34,9 @@ export default function SupportPage() {
             <p>We know how important it is to assist those in need:</p>
             
             <blockquote className="border-l-4 border-primary pl-4 py-2 my-4 italic">
-              Abdullah bin 'Amr bin Al-'as (May Allah be pleased with him) reported:<br />
-              A man asked Messenger of Allah (peace be upon him), "Which act in Islam is the best?" He (peace be upon him) replied, "To feed (the poor and the needy) and to greet those whom you know and those you do not know."<br />
-              Bukhari & Muslim
+              Abdullah bin &apos;Amr bin Al-&apos;as (May Allah be pleased with him) reported:<br />
+              A man asked Messenger of Allah (peace be upon him), &quot;Which act in Islam is the best?&quot; He (peace be upon him) replied, &quot;To feed (the poor and the needy) and to greet those whom you know and those you do not know.&quot;<br />
+              Bukhari &amp; Muslim
             </blockquote>
           </li>
         </ol>
@@ -47,14 +47,14 @@ export default function SupportPage() {
           </p>
           
           <p className="mb-4">
-            If you don't have much to give, every little bit helps those that are sick, hungry, thirsty, and cold:
+            If you don&apos;t have much to give, every little bit helps those that are sick, hungry, thirsty, and cold:
           </p>
           
-          <blockquote className="border-l-4 border-primary pl-4 py-2 my-4 italic">
-            Adi bin Hatim (May Allah be pleased with him) reported:<br />
-            Messenger of Allah (peace be upon him) said, "Guard yourselves against the Fire (of Hell) even if it be only with half a date-fruit (given in charity); and if you cannot afford even that, you should at least say a good word."<br />
-            Bukhari & Muslim
-          </blockquote>
+            <blockquote className="border-l-4 border-primary pl-4 py-2 my-4 italic">
+              Adi bin Hatim (May Allah be pleased with him) reported:<br />
+              Messenger of Allah (peace be upon him) said, &quot;Guard yourselves against the Fire (of Hell) even if it be only with half a date-fruit (given in charity); and if you cannot afford even that, you should at least say a good word.&quot;<br />
+              Bukhari &amp; Muslim
+            </blockquote>
           
           <div className="mt-6 flex justify-center">
             <a 

@@ -143,7 +143,7 @@ fetch_collections()`}
       <div className="bg-card p-6 rounded-lg shadow-sm">
         <h2 className="text-xl font-semibold mb-4">Open Source Contributions</h2>
         <p className="mb-4">
-          Sunnah.com is an open-source project, and we welcome contributions from developers. If you're interested in contributing to our codebase, check out our GitHub repository.
+          Sunnah.com is an open-source project, and we welcome contributions from developers. If you&apos;re interested in contributing to our codebase, check out our GitHub repository.
         </p>
         <div className="flex space-x-4">
           <a 

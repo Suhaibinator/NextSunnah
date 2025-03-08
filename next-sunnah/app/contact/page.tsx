@@ -46,7 +46,7 @@ export default function ContactPage() {
         <div>
           <h2 className="text-2xl font-semibold mb-6">Get in Touch</h2>
           <p className="mb-6">
-            We value your feedback, questions, and suggestions. Please use the form to get in touch with our team, and we'll respond as soon as possible.
+            We value your feedback, questions, and suggestions. Please use the form to get in touch with our team, and we&apos;ll respond as soon as possible.
           </p>
           
           <div className="space-y-6">
@@ -137,7 +137,7 @@ export default function ContactPage() {
             <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-6 rounded-lg">
               <h3 className="text-xl font-semibold text-green-800 dark:text-green-300 mb-2">Message Sent!</h3>
               <p className="text-green-700 dark:text-green-400">
-                Thank you for contacting us. We've received your message and will get back to you as soon as possible.
+                Thank you for contacting us. We&apos;ve received your message and will get back to you as soon as possible.
               </p>
               <button 
                 onClick={() => setIsSubmitted(false)}

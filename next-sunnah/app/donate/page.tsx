@@ -58,7 +58,7 @@ export default function DonatePage() {
         </ul>
         
         <p>
-          As a non-profit project, we rely on the generosity of our community to continue our mission of spreading authentic knowledge of the Prophet's <span className="arabic">(صلى الله عليه و سلم)</span> teachings.
+          As a non-profit project, we rely on the generosity of our community to continue our mission of spreading authentic knowledge of the Prophet&apos;s <span className="arabic">(صلى الله عليه و سلم)</span> teachings.
         </p>
       </div>
       
@@ -118,7 +118,7 @@ export default function DonatePage() {
       <div className="text-center">
         <h3 className="text-xl font-semibold mb-4">Other Ways to Support</h3>
         <p className="mb-4">
-          If you'd like to discuss other ways to support Sunnah.com, such as corporate sponsorships, 
+          If you&apos;d like to discuss other ways to support Sunnah.com, such as corporate sponsorships, 
           legacy giving, or in-kind donations, please contact us.
         </p>
         <a href="/contact" className="text-primary hover:underline">
