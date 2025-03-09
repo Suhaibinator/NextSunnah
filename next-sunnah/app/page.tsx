@@ -2,6 +2,7 @@ import Link from "next/link";
 import { collections } from "@/data/collections";
 import { SearchBar } from "@/components/search-bar";
 import { CollectionCard } from "@/components/collection-card";
+import { Logo } from "@/components/logo";
 
 export default function Home() {
   // Featured collections (showing first 4)
@@ -11,6 +12,9 @@ export default function Home() {
     <div className="container mx-auto px-4 py-8">
       {/* Hero Section */}
       <section className="py-12 md:py-20 text-center">
+        <div className="flex justify-center mb-8">
+          <Logo width={1024} className="mx-auto" />
+        </div>
         <h1 className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-muted-foreground">
           The Hadith of the Prophet Muhammad <span className="arabic">(صلى الله عليه و سلم)</span> at your fingertips
         </h1>
