@@ -5,6 +5,7 @@ import { getBooksByCollection } from "@/data/books";
 import { getChaptersByBook } from "@/data/chapters";
 import { getHadithsByChapter } from "@/data/hadiths";
 import { SearchBar } from "@/components/search-bar";
+import { HadithMetadata } from "@/components/hadith-metadata";
 
 // Utility function to properly render the PBUH symbol
 const formatTextWithPBUH = (text: string) => {
@@ -59,24 +60,32 @@ export default async function BookPage(props: BookPageProps) {
           ← Back to {collection.name}
         </Link>
 
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
-          <div>
-            <div className="text-sm text-muted-foreground mb-1">
-              {collection.name}
-            </div>
-            <div className="grid grid-cols-2 gap-4 mb-4">
-              <h1 className="text-3xl md:text-4xl font-bold">
-                {book.number}. {book.name}
-              </h1>
-              <p className="arabic text-2xl font-medium text-right">
-                {book.nameArabic}
-              </p>
+        <div className="text-sm text-muted-foreground mb-1">
+          {collection.name}
+        </div>
+
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+          <h1 className="text-3xl md:text-4xl font-bold mb-2 md:mb-0">
+            {book.number}. {book.name}
+          </h1>
+
+          {/* Desktop view: Arabic text with metadata below */}
+          <div className="hidden md:flex flex-col items-end">
+            <p className="arabic text-2xl font-medium">{book.nameArabic}</p>
+            <div className="text-sm text-muted-foreground mt-2 text-right">
+              <div>
+                {book.hadithCount} Hadiths • {book.chapterCount} Chapters
+              </div>
             </div>
           </div>
 
-          <div className="text-sm text-muted-foreground">
-            <div>{book.hadithCount} Hadiths</div>
-            <div>{book.chapterCount} Chapters</div>
+          {/* Mobile view: Metadata and Arabic on same line */}
+          <div className="flex md:hidden justify-between items-center w-full mt-2">
+            <div className="text-sm text-muted-foreground">
+              <div>{book.hadithCount} Hadiths</div>
+              <div>{book.chapterCount} Chapters</div>
+            </div>
+            <p className="arabic text-2xl font-medium">{book.nameArabic}</p>
           </div>
         </div>
 
@@ -94,8 +103,8 @@ export default async function BookPage(props: BookPageProps) {
           return (
             <div key={chapter.id} className="border-t pt-8">
               <div className="mb-6">
-                <div className="grid grid-cols-2 gap-4">
-                  <h2 className="text-xl font-bold">
+                <div className="flex flex-col md:grid md:grid-cols-2 md:gap-4">
+                  <h2 className="text-xl font-bold mb-2 md:mb-0">
                     Chapter {chapter.number}: {chapter.name}
                   </h2>
                   <p className="arabic text-lg text-right">
@@ -112,24 +121,17 @@ export default async function BookPage(props: BookPageProps) {
                     className="block"
                   >
                     <div className="p-6 rounded-lg border bg-card hover:border-primary transition-colors">
-                      <div className="flex justify-between items-start mb-4">
-                        <div className="flex items-center gap-2">
-                          <span className="bg-primary/10 text-primary px-2 py-1 rounded text-sm font-medium">
-                            Hadith {hadith.number}
-                          </span>
-                          {hadith.grade && (
-                            <span className="bg-secondary/10 text-secondary-foreground px-2 py-1 rounded text-sm">
-                              {hadith.grade}
-                            </span>
-                          )}
-                        </div>
-
-                        {hadith.narrator && (
-                          <div className="text-sm text-muted-foreground">
-                            {hadith.narrator}
-                          </div>
-                        )}
+                      <div className="mb-2">
+                        <span className="bg-primary/10 text-primary px-2 py-1 rounded text-sm font-medium">
+                          Hadith {hadith.number}
+                        </span>
                       </div>
+
+                      {hadith.narrator && (
+                        <div className="text-primary font-medium mb-4">
+                          {hadith.narrator}
+                        </div>
+                      )}
 
                       <div className="mb-4">
                         <p
@@ -140,9 +142,11 @@ export default async function BookPage(props: BookPageProps) {
                         />
                       </div>
 
-                      <div className="arabic text-right">
+                      <div className="arabic text-right mb-4">
                         <p className="line-clamp-3">{hadith.textArabic}</p>
                       </div>
+
+                      <HadithMetadata hadith={hadith} />
                     </div>
                   </Link>
                 ))}

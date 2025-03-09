@@ -6,6 +6,7 @@ import { collections } from "@/data/collections";
 import { getBooksByCollection } from "@/data/books";
 import { getChaptersByBook } from "@/data/chapters";
 import { getHadithById } from "@/data/hadiths";
+import { HadithMetadata } from "@/components/hadith-metadata";
 
 // Utility function to properly render the PBUH symbol
 const formatTextWithPBUH = (text: string) => {
@@ -103,35 +104,7 @@ const HadithPage = async (props: HadithPageProps) => {
             </div>
           </div>
 
-          <div className="mt-6 space-y-1 text-sm text-muted-foreground">
-            {hadith.grade && (
-              <div>
-                <span className="font-semibold">Grade:</span>{" "}
-                <span className="bg-secondary/10 text-secondary-foreground px-2 py-0.5 rounded">
-                  {hadith.grade}
-                </span>
-                {hadith.gradeSource && ` (${hadith.gradeSource})`}
-              </div>
-            )}
-            {hadith.reference && (
-              <div>
-                <span className="font-semibold">Reference:</span>{" "}
-                {hadith.reference}
-              </div>
-            )}
-            {hadith.inBookReference && (
-              <div>
-                <span className="font-semibold">In-book reference:</span>{" "}
-                {hadith.inBookReference}
-              </div>
-            )}
-            {hadith.englishTranslation && (
-              <div>
-                <span className="font-semibold">English translation:</span>{" "}
-                {hadith.englishTranslation}
-              </div>
-            )}
-          </div>
+          <HadithMetadata hadith={hadith} className="mt-6" />
         </div>
 
         {/* Actions */}
