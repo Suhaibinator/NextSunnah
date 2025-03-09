@@ -75,7 +75,7 @@ export function Header() {
       <div className="container mx-auto max-w-7xl flex h-16 items-center justify-between px-4 md:px-6 lg:px-8">
         <div className="flex items-center pl-0 md:pl-6">
           <Link href="/" className="flex items-center">
-            <Logo width={240} className="flex-shrink-0" />
+            <Logo width={240} colorVariable="--secondary" className="flex-shrink-0" />
           </Link>
         </div>
 

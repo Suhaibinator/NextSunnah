@@ -14,7 +14,7 @@
 
 :root {
   /* Base colors */
-  --background: #fbfaf8;
+  --background: #fffaf5;       /* slightly lightened from #fff8f2 */
   --foreground: #2d2d2d;
 
   --card: #ffffff;
@@ -23,46 +23,47 @@
   --popover: #ffffff;
   --popover-foreground: #2d2d2d;
 
-  /* You can reuse your old "link-color" or highlight color for these if desired */
-  --primary: #50a3a3; /* old "link-color" */
+  /* Primary / accent colors */
+  --primary: #60aeae;          /* slightly lightened from #50a3a3 */
   --primary-foreground: #ffffff;
 
-  --secondary: #cccccc;
-  --secondary-foreground: #666666;
+  --secondary: #dddddd;        /* was #cccccc */
+  --secondary-foreground: #777777;  /* was #666666 */
 
-  --muted: #ededed;
-  --muted-foreground: #444444;
+  --muted: #f2f2f2;            /* was #ededed */
+  --muted-foreground: #555555; /* was #444444 */
 
-  --accent: #3d938c;
+  --accent: #4ba29c;           /* was #3d938c */
   --accent-foreground: #ffffff;
 
-  --destructive: #d6d6d6; /* or something from your light palette */
-  --destructive-foreground: #666666;
+  --destructive: #e0e0e0;      /* was #d6d6d6 */
+  --destructive-foreground: #777777; /* was #666666 */
 
-  --border: #cccccc;
+  --border: #dddddd;           /* was #cccccc */
   --input: #ffffff;
-  --ring: #50a3a3; /* focus ring in light mode */
+  --ring: #60aeae;             /* was #50a3a3 */
 
-  /* Chart placeholders */
-  --chart-1: #50a3a3;
-  --chart-2: #84b8b8;
-  --chart-3: #999999;
-  --chart-4: #cccccc;
-  --chart-5: #666666;
-  
+  /* Chart placeholders (lighten or keep as is) */
+  --chart-1: #60aeae;          /* was #50a3a3 */
+  --chart-2: #90c0c0;          /* was #84b8b8 */
+  --chart-3: #aaaaaa;          /* was #999999 */
+  --chart-4: #dddddd;          /* was #cccccc */
+  --chart-5: #777777;          /* was #666666 */
+
   /* Border radius */
   --radius: 0.5rem;
   
   /* Sidebar colors */
   --sidebar: #ffffff;
   --sidebar-foreground: #2d2d2d;
-  --sidebar-primary: #50a3a3;
+  --sidebar-primary: #60aeae;   /* was #50a3a3 */
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #ededed;
-  --sidebar-accent-foreground: #444444;
-  --sidebar-border: #cccccc;
-  --sidebar-ring: #50a3a3;
+  --sidebar-accent: #f2f2f2;    /* was #ededed */
+  --sidebar-accent-foreground: #555555; /* was #444444 */
+  --sidebar-border: #dddddd;    /* was #cccccc */
+  --sidebar-ring: #60aeae;      /* was #50a3a3 */
 }
+
 
 .dark {
 

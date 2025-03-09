@@ -13,7 +13,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="py-12 md:py-20 text-center">
         <div className="flex justify-center mb-8">
-          <Logo width={1024} className="mx-auto" />
+          <Logo width={1024} colorVariable={'--primary'} className="mx-auto" />
         </div>
         <h1 className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-muted-foreground">
           The Hadith of the Prophet Muhammad <span className="arabic">(صلى الله عليه و سلم)</span> at your fingertips
