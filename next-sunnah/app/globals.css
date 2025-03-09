@@ -87,7 +87,7 @@
   --secondary-foreground: #ffffff;
 
   /* Muted colors (used for gray text) */
-  --muted: #B3B6BC;                /* old --sanad_text_color */
+  --muted: #5e5e5e91;                /* old --sanad_text_color */
   --muted-foreground: #B3B6BC;     /* lighter gray for better contrast on dark backgrounds */
 
   /* Accent colors (for highlights, etc.) */
