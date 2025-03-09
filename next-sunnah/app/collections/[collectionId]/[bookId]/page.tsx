@@ -1,58 +1,64 @@
-import Link from "next/link"
-import { notFound } from "next/navigation"
-import { collections } from "@/data/collections"
-import { getBooksByCollection } from "@/data/books"
-import { getChaptersByBook } from "@/data/chapters"
-import { getHadithsByChapter } from "@/data/hadiths"
-import { SearchBar } from "@/components/search-bar"
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { collections } from "@/data/collections";
+import { getBooksByCollection } from "@/data/books";
+import { getChaptersByBook } from "@/data/chapters";
+import { getHadithsByChapter } from "@/data/hadiths";
+import { SearchBar } from "@/components/search-bar";
+
+// Utility function to properly render the PBUH symbol
+const formatTextWithPBUH = (text: string) => {
+  // Replace the PBUH symbol with a properly styled span
+  return text.replace(/\(ﷺ\)/g, '(<span class="pbuh-symbol">ﷺ</span>)');
+};
 
 interface BookPageProps {
   params: Promise<{
-    collectionId: string
-    bookId: string
-  }>
+    collectionId: string;
+    bookId: string;
+  }>;
 }
 
 export async function generateMetadata(props: BookPageProps) {
   const params = await props.params;
-  const collection = collections.find(c => c.id === params.collectionId)
-  const books = getBooksByCollection(params.collectionId)
-  const book = books.find(b => b.id === params.bookId)
+  const collection = collections.find((c) => c.id === params.collectionId);
+  const books = getBooksByCollection(params.collectionId);
+  const book = books.find((b) => b.id === params.bookId);
 
   if (!collection || !book) {
     return {
       title: "Book Not Found - Sunnah.com",
-    }
+    };
   }
 
   return {
     title: `${book.name} - ${collection.name} - Sunnah.com`,
     description: `${book.name} from ${collection.name} containing ${book.hadithCount} hadiths.`,
-  }
+  };
 }
 
 export default async function BookPage(props: BookPageProps) {
   const params = await props.params;
-  const collection = collections.find(c => c.id === params.collectionId)
-  const books = getBooksByCollection(params.collectionId)
-  const book = books.find(b => b.id === params.bookId)
+  const collection = collections.find((c) => c.id === params.collectionId);
+  const books = getBooksByCollection(params.collectionId);
+  const book = books.find((b) => b.id === params.bookId);
 
   if (!collection || !book) {
-    notFound()
+    notFound();
   }
 
-  const chapters = getChaptersByBook(book.id)
+  const chapters = getChaptersByBook(book.id);
 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <Link 
-          href={`/collections/${collection.id}`} 
+        <Link
+          href={`/collections/${collection.id}`}
           className="text-primary hover:underline mb-4 inline-block"
         >
           ← Back to {collection.name}
         </Link>
-        
+
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
           <div>
             <div className="text-sm text-muted-foreground mb-1">
@@ -62,27 +68,29 @@ export default async function BookPage(props: BookPageProps) {
               <h1 className="text-3xl md:text-4xl font-bold">
                 {book.number}. {book.name}
               </h1>
-              <p className="arabic text-2xl font-medium text-right">{book.nameArabic}</p>
+              <p className="arabic text-2xl font-medium text-right">
+                {book.nameArabic}
+              </p>
             </div>
           </div>
-          
+
           <div className="text-sm text-muted-foreground">
             <div>{book.hadithCount} Hadiths</div>
             <div>{book.chapterCount} Chapters</div>
           </div>
         </div>
-        
+
         {/* Search Bar */}
         <div className="max-w-2xl mb-8">
           <SearchBar />
         </div>
       </div>
-      
+
       {/* Chapters and Hadiths */}
       <div className="space-y-12">
         {chapters.map((chapter) => {
-          const hadiths = getHadithsByChapter(chapter.id)
-          
+          const hadiths = getHadithsByChapter(chapter.id);
+
           return (
             <div key={chapter.id} className="border-t pt-8">
               <div className="mb-6">
@@ -90,13 +98,15 @@ export default async function BookPage(props: BookPageProps) {
                   <h2 className="text-xl font-bold">
                     Chapter {chapter.number}: {chapter.name}
                   </h2>
-                  <p className="arabic text-lg text-right">{chapter.nameArabic}</p>
+                  <p className="arabic text-lg text-right">
+                    {chapter.nameArabic}
+                  </p>
                 </div>
               </div>
-              
+
               <div className="space-y-8">
                 {hadiths.map((hadith) => (
-                  <Link 
+                  <Link
                     key={hadith.id}
                     href={`/collections/${collection.id}/${book.id}/${hadith.id}`}
                     className="block"
@@ -113,25 +123,30 @@ export default async function BookPage(props: BookPageProps) {
                             </span>
                           )}
                         </div>
-                        
+
                         {hadith.narrator && (
                           <div className="text-sm text-muted-foreground">
                             {hadith.narrator}
                           </div>
                         )}
                       </div>
-                      
+
                       <div className="mb-4">
-                        <p className="line-clamp-3">{hadith.text}</p>
+                        <p
+                          className="line-clamp-3"
+                          dangerouslySetInnerHTML={{
+                            __html: formatTextWithPBUH(hadith.text),
+                          }}
+                        />
                       </div>
-                      
+
                       <div className="arabic text-right">
                         <p className="line-clamp-3">{hadith.textArabic}</p>
                       </div>
                     </div>
                   </Link>
                 ))}
-                
+
                 {hadiths.length === 0 && (
                   <div className="text-center p-8 text-muted-foreground">
                     No hadiths available for this chapter.
@@ -139,9 +154,9 @@ export default async function BookPage(props: BookPageProps) {
                 )}
               </div>
             </div>
-          )
+          );
         })}
-        
+
         {chapters.length === 0 && (
           <div className="text-center p-8 text-muted-foreground">
             No chapters available for this book.
@@ -149,5 +164,5 @@ export default async function BookPage(props: BookPageProps) {
         )}
       </div>
     </div>
-  )
+  );
 }

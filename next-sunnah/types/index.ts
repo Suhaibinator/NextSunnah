@@ -38,5 +38,9 @@ export interface Hadith {
   text: string;
   textArabic: string;
   grade?: string;
+  gradeSource?: string;
   narrator?: string;
+  reference?: string;
+  inBookReference?: string;
+  englishTranslation?: string;
 }

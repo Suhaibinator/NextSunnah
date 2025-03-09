@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&display=swap");
 
 @import "tailwindcss";
 
@@ -9,12 +10,12 @@
 @theme {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-arabic: 'Noto Naskh Arabic', serif;
+  --font-arabic: "Noto Naskh Arabic", "Scheherazade New", serif;
 }
 
 :root {
   /* Base colors */
-  --background: #fffaf5;       /* slightly lightened from #fff8f2 */
+  --background: #fffaf5; /* slightly lightened from #fff8f2 */
   --foreground: #2d2d2d;
 
   --card: #ffffff;
@@ -24,99 +25,97 @@
   --popover-foreground: #2d2d2d;
 
   /* Primary / accent colors */
-  --primary: #60aeae;          /* slightly lightened from #50a3a3 */
+  --primary: #60aeae; /* slightly lightened from #50a3a3 */
   --primary-foreground: #ffffff;
 
-  --secondary: #dddddd;        /* was #cccccc */
-  --secondary-foreground: #777777;  /* was #666666 */
+  --secondary: #dddddd; /* was #cccccc */
+  --secondary-foreground: #777777; /* was #666666 */
 
-  --muted: #f2f2f2;            /* was #ededed */
+  --muted: #f2f2f2; /* was #ededed */
   --muted-foreground: #555555; /* was #444444 */
 
-  --accent: #4ba29c;           /* was #3d938c */
+  --accent: #4ba29c; /* was #3d938c */
   --accent-foreground: #ffffff;
 
-  --destructive: #e0e0e0;      /* was #d6d6d6 */
+  --destructive: #e0e0e0; /* was #d6d6d6 */
   --destructive-foreground: #777777; /* was #666666 */
 
-  --border: #dddddd;           /* was #cccccc */
+  --border: #dddddd; /* was #cccccc */
   --input: #ffffff;
-  --ring: #60aeae;             /* was #50a3a3 */
+  --ring: #60aeae; /* was #50a3a3 */
 
   /* Chart placeholders (lighten or keep as is) */
-  --chart-1: #60aeae;          /* was #50a3a3 */
-  --chart-2: #90c0c0;          /* was #84b8b8 */
-  --chart-3: #aaaaaa;          /* was #999999 */
-  --chart-4: #dddddd;          /* was #cccccc */
-  --chart-5: #777777;          /* was #666666 */
+  --chart-1: #60aeae; /* was #50a3a3 */
+  --chart-2: #90c0c0; /* was #84b8b8 */
+  --chart-3: #aaaaaa; /* was #999999 */
+  --chart-4: #dddddd; /* was #cccccc */
+  --chart-5: #777777; /* was #666666 */
 
   /* Border radius */
   --radius: 0.5rem;
-  
+
   /* Sidebar colors */
   --sidebar: #ffffff;
   --sidebar-foreground: #2d2d2d;
-  --sidebar-primary: #60aeae;   /* was #50a3a3 */
+  --sidebar-primary: #60aeae; /* was #50a3a3 */
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #f2f2f2;    /* was #ededed */
+  --sidebar-accent: #f2f2f2; /* was #ededed */
   --sidebar-accent-foreground: #555555; /* was #444444 */
-  --sidebar-border: #dddddd;    /* was #cccccc */
-  --sidebar-ring: #60aeae;      /* was #50a3a3 */
+  --sidebar-border: #dddddd; /* was #cccccc */
+  --sidebar-ring: #60aeae; /* was #50a3a3 */
 }
 
-
 .dark {
-
   /* Base colors */
-  --background: #1F2125;           /* old --site-bg */
-  --foreground: #ffffff;           /* old --primary-text-color (general text) */
+  --background: #1f2125; /* old --site-bg */
+  --foreground: #ffffff; /* old --primary-text-color (general text) */
 
   /* Card colors */
-  --card: #272F33;                 /* old secondry_block_bg, sidePanel_bg, etc. */
+  --card: #272f33; /* old secondry_block_bg, sidePanel_bg, etc. */
   --card-foreground: #ffffff;
 
   /* Popover colors */
-  --popover: #272F33;
+  --popover: #272f33;
   --popover-foreground: #ffffff;
 
   /* Primary colors */
-  --primary: #50a3a3;              /* old --link-color (teal) */
+  --primary: #50a3a3; /* old --link-color (teal) */
   --primary-foreground: #ffffff;
 
   /* Secondary colors */
-  --secondary: #343A40;            /* old --header-bg or boh_hover_bg */
+  --secondary: #343a40; /* old --header-bg or boh_hover_bg */
   --secondary-foreground: #ffffff;
 
   /* Muted colors (used for gray text) */
-  --muted: #5e5e5e91;                /* old --sanad_text_color */
-  --muted-foreground: #B3B6BC;     /* lighter gray for better contrast on dark backgrounds */
+  --muted: #5e5e5e91; /* old --sanad_text_color */
+  --muted-foreground: #b3b6bc; /* lighter gray for better contrast on dark backgrounds */
 
   /* Accent colors (for highlights, etc.) */
-  --accent: #3d938c;               /* old --highlight-color */
+  --accent: #3d938c; /* old --highlight-color */
   --accent-foreground: #ffffff;
 
   /* Destructive colors (used for disabled, etc.) */
-  --destructive: #6C757D;          /* old --disable_button_bg */
+  --destructive: #6c757d; /* old --disable_button_bg */
   --destructive-foreground: #ffffff;
 
   /* Border, input, ring colors */
-  --border: #2b2b2d;               /* old search shadow color or something close */
-  --input: #272F33;                /* matches sidePanel_bg / search fields */
-  --ring: #50a3a3;                 /* keep teal focus ring in dark mode */
-  
+  --border: #2b2b2d; /* old search shadow color or something close */
+  --input: #272f33; /* matches sidePanel_bg / search fields */
+  --ring: #50a3a3; /* keep teal focus ring in dark mode */
+
   /* Chart colors - dark theme */
-  --chart-1: #50a3a3; 
-  --chart-2: #3d938c; 
-  --chart-3: #90b8b9;              /* old --sticky-color if desired */
-  --chart-4: #6C757D;              /* or #343A40, etc. */
-  --chart-5: #B3B6BC;
+  --chart-1: #50a3a3;
+  --chart-2: #3d938c;
+  --chart-3: #90b8b9; /* old --sticky-color if desired */
+  --chart-4: #6c757d; /* or #343A40, etc. */
+  --chart-5: #b3b6bc;
 
   /* Sidebar in dark mode */
-  --sidebar: #272F33;
+  --sidebar: #272f33;
   --sidebar-foreground: #ffffff;
   --sidebar-primary: #50a3a3;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #343A40;
+  --sidebar-accent: #343a40;
   --sidebar-accent-foreground: #ffffff;
   --sidebar-border: #2b2b2d;
   --sidebar-ring: #50a3a3;
@@ -168,10 +167,16 @@
   body {
     @apply bg-background text-foreground;
   }
-  
+
   /* Arabic text styling */
   .arabic {
     @apply font-arabic text-right;
     direction: rtl;
+  }
+
+  /* Special character styling for PBUH symbol */
+  .pbuh-symbol {
+    font-family: "Scheherazade New", serif;
+    display: inline-block;
   }
 }

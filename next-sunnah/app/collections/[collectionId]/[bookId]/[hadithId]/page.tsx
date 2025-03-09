@@ -1,59 +1,65 @@
 // app/collections/[collectionId]/[bookId]/[hadithId]/page.tsx
 
-import Link from "next/link"
-import { notFound } from "next/navigation"
-import { collections } from "@/data/collections"
-import { getBooksByCollection } from "@/data/books"
-import { getChaptersByBook } from "@/data/chapters"
-import { getHadithById } from "@/data/hadiths"
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { collections } from "@/data/collections";
+import { getBooksByCollection } from "@/data/books";
+import { getChaptersByBook } from "@/data/chapters";
+import { getHadithById } from "@/data/hadiths";
+
+// Utility function to properly render the PBUH symbol
+const formatTextWithPBUH = (text: string) => {
+  // Replace the PBUH symbol with a properly styled span
+  return text.replace(/\(ﷺ\)/g, '(<span class="pbuh-symbol">ﷺ</span>)');
+};
 
 interface HadithParams {
-  collectionId: string
-  bookId: string
-  hadithId: string
+  collectionId: string;
+  bookId: string;
+  hadithId: string;
 }
 
 interface HadithPageProps {
-  params: Promise<HadithParams | Promise<HadithParams>>
+  params: Promise<HadithParams | Promise<HadithParams>>;
 }
 
 export async function generateMetadata(props: HadithPageProps) {
   const params = await props.params;
   // You can just use params directly, no need for Promise.resolve
-  const { collectionId, bookId, hadithId } = params
+  const { collectionId, bookId, hadithId } = params;
 
-  const collection = collections.find((c) => c.id === collectionId)
-  const books = getBooksByCollection(collectionId)
-  const book = books.find((b) => b.id === bookId)
-  const hadith = getHadithById(hadithId)
+  const collection = collections.find((c) => c.id === collectionId);
+  const books = getBooksByCollection(collectionId);
+  const book = books.find((b) => b.id === bookId);
+  const hadith = getHadithById(hadithId);
 
   if (!collection || !book || !hadith) {
     return {
       title: "Hadith Not Found - Sunnah.com",
-    }
+    };
   }
 
   return {
     title: `Hadith ${hadith.number} - ${book.name} - ${collection.name} - Sunnah.com`,
     description: hadith.text.substring(0, 160) + "...",
-  }
+  };
 }
 
 const HadithPage = async (props: HadithPageProps) => {
   const params = await props.params;
-  const { collectionId, bookId, hadithId } = params
+  const { collectionId, bookId, hadithId } = params;
 
-  const collection = collections.find((c) => c.id === collectionId)
-  const books = getBooksByCollection(collectionId)
-  const book = books.find((b) => b.id === bookId)
-  const hadith = getHadithById(hadithId)
+  const collection = collections.find((c) => c.id === collectionId);
+  const books = getBooksByCollection(collectionId);
+  const book = books.find((b) => b.id === bookId);
+  const hadith = getHadithById(hadithId);
 
   if (!collection || !book || !hadith) {
-    notFound()
+    notFound();
   }
 
-  const chapters = getChaptersByBook(book.id)
-  const chapter = chapters.find((c) => c.id === hadith.chapterId)
+  const chapters = getChaptersByBook(book.id);
+  const chapter = chapters.find((c) => c.id === hadith.chapterId);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -65,38 +71,66 @@ const HadithPage = async (props: HadithPageProps) => {
           ← Back to {book.name}
         </Link>
 
-        <div className="flex flex-col md:flex-row justify-between gap-4 mb-6">
-          <div>
-            <div className="text-sm text-muted-foreground mb-1">
-              {collection.name} &gt; {book.name}
-              {chapter && ` > ${chapter.name}`}
-            </div>
-            <h1 className="text-3xl font-bold mb-2">
-              Hadith {hadith.number}
-            </h1>
+        <div className="mb-6">
+          <div className="text-sm text-muted-foreground mb-1">
+            {collection.name} &gt; {book.name}
+            {chapter && ` > ${chapter.name}`}
           </div>
-
-          {hadith.grade && (
-            <div className="bg-secondary/10 text-secondary-foreground px-3 py-1 rounded text-sm h-fit">
-              {hadith.grade}
-            </div>
-          )}
+          <h1 className="text-3xl font-bold mb-2">Hadith {hadith.number}</h1>
         </div>
       </div>
 
       {/* Hadith Content */}
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl md:max-w-5xl mx-auto">
         <div className="mb-8 p-6 rounded-lg border bg-card">
           {hadith.narrator && (
-            <div className="text-primary font-medium mb-4">{hadith.narrator}</div>
+            <div className="text-primary font-medium mb-4">
+              {hadith.narrator}
+            </div>
           )}
 
-          <div className="mb-8 text-lg leading-relaxed">
-            <p>{hadith.text}</p>
+          <div className="flex flex-col md:flex-row gap-8">
+            <div className="flex-1 text-lg leading-relaxed">
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: formatTextWithPBUH(hadith.text),
+                }}
+              />
+            </div>
+
+            <div className="flex-1 arabic text-right text-xl leading-relaxed">
+              <p>{hadith.textArabic}</p>
+            </div>
           </div>
 
-          <div className="arabic text-right text-xl leading-relaxed">
-            <p>{hadith.textArabic}</p>
+          <div className="mt-6 space-y-1 text-sm text-muted-foreground">
+            {hadith.grade && (
+              <div>
+                <span className="font-semibold">Grade:</span>{" "}
+                <span className="bg-secondary/10 text-secondary-foreground px-2 py-0.5 rounded">
+                  {hadith.grade}
+                </span>
+                {hadith.gradeSource && ` (${hadith.gradeSource})`}
+              </div>
+            )}
+            {hadith.reference && (
+              <div>
+                <span className="font-semibold">Reference:</span>{" "}
+                {hadith.reference}
+              </div>
+            )}
+            {hadith.inBookReference && (
+              <div>
+                <span className="font-semibold">In-book reference:</span>{" "}
+                {hadith.inBookReference}
+              </div>
+            )}
+            {hadith.englishTranslation && (
+              <div>
+                <span className="font-semibold">English translation:</span>{" "}
+                {hadith.englishTranslation}
+              </div>
+            )}
           </div>
         </div>
 
@@ -111,7 +145,7 @@ const HadithPage = async (props: HadithPageProps) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default HadithPage;
