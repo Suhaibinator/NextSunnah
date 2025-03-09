@@ -18,26 +18,56 @@ export function Logo({
   const [mounted, setMounted] = useState(false);
   const [themeColor, setThemeColor] = useState("");
 
+  // Default fallback color (should only be used during SSR)
+  const fallbackColor = "50a3a3";
+
   // Only show the logo after mounting to avoid hydration mismatch
-  // Also get the computed CSS variable value
   useEffect(() => {
     setMounted(true);
 
-    // Get the CSS variable value based on the current theme
-    const root = document.documentElement;
-    const computedStyle = getComputedStyle(root);
-    const cssVarValue = computedStyle.getPropertyValue(colorVariable).trim();
+    // Use a small timeout to ensure the theme has been fully applied to the DOM
+    // This is crucial for getting the correct CSS variable values after theme changes
+    const timeoutId = setTimeout(() => {
+      try {
+        const root = document.documentElement;
+        const computedStyle = getComputedStyle(root);
 
-    // Convert the CSS variable value to a hex color without the #
-    const hexColor = cssVarValue.startsWith("#")
-      ? cssVarValue.substring(1)
-      : cssVarValue;
+        // Make sure we're using the variable name correctly (with or without --)
+        const varName = colorVariable.startsWith("--")
+          ? colorVariable
+          : `--${colorVariable}`;
 
-    setThemeColor(hexColor);
-  }, [theme, colorVariable]); // Re-run when theme or colorVariable changes
+        // Get the computed value of the CSS variable
+        let cssVarValue = computedStyle.getPropertyValue(varName).trim();
 
-  // Default fallback color (should only be used during SSR)
-  const fallbackColor = "50a3a3";
+        // If empty, try without -- prefix as fallback
+        if (!cssVarValue && varName.startsWith("--")) {
+          cssVarValue = computedStyle
+            .getPropertyValue(varName.substring(2))
+            .trim();
+        }
+
+        // Convert the CSS variable value to a hex color without the #
+        const hexColor = cssVarValue.startsWith("#")
+          ? cssVarValue.substring(1)
+          : cssVarValue;
+
+        if (hexColor) {
+          setThemeColor(hexColor);
+        } else {
+          console.warn(
+            `Could not get color value for ${colorVariable}, using fallback`
+          );
+          setThemeColor(fallbackColor);
+        }
+      } catch (error) {
+        console.error("Error getting theme color:", error);
+        setThemeColor(fallbackColor);
+      }
+    }, 50); // Small delay to ensure theme is applied
+
+    return () => clearTimeout(timeoutId);
+  }, [theme, colorVariable, fallbackColor]); // Re-run when theme or colorVariable changes
 
   // Use the theme color or fallback if not available yet
   const color = themeColor || fallbackColor;
